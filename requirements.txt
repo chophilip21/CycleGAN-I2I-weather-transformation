@@ -3,3 +3,5 @@ pytorch-lightning
 torch
 torchvision
 opencv-python
+tensorboard
+tensorboardX

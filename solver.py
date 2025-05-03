@@ -19,7 +19,6 @@ from losses.da_loss import VSALoss
 from models import utils
 from models.iit import VSAIT
 from PIL import Image
-from pytorch_lightning.utilities.cloud_io import load as pl_load
 from torchvision.utils import make_grid
 from utils.logger import get_module_logger
 
@@ -36,6 +35,7 @@ class VSAITSolver(pl.LightningModule):
 
     def __init__(self, cfg):
         super(VSAITSolver, self).__init__()
+        self.automatic_optimization = False
         self.cfg = cfg
         self.output_dir = cfg.OUTPUT_DIR
         self.model = VSAIT(cfg)
@@ -53,7 +53,7 @@ class VSAITSolver(pl.LightningModule):
         # load model weights
         if cfg.TASK_MODEL.WEIGHTS:
             logger.info(f"Loading weights from {cfg.TASK_MODEL.WEIGHTS}")
-            loaded_model = pl_load(
+            loaded_model = torch.load(
                 cfg.TASK_MODEL.WEIGHTS,
                 map_location="cuda:0" if torch.cuda.is_available() else None,
             )
@@ -195,21 +195,40 @@ class VSAITSolver(pl.LightningModule):
     def setup(self, *args, **kwargs):
         os.makedirs(os.path.join(self.output_dir, "images"), exist_ok=True)
 
-    def training_step(self, batch, batch_idx, optimizer_idx=None):
-        outputs, targets = self.forward(batch, optimizer_idx=optimizer_idx)
+    def training_step(self, batch, batch_idx):
+        # Get optimizers
+        opt_g, opt_d = self.optimizers()
 
-        loss = self.criterion(outputs, targets)
+        # Generator step
+        opt_g.zero_grad()
+        outputs, targets = self.forward(batch, optimizer_idx=0)
+        loss_g = self.criterion(outputs, targets)
+        self.manual_backward(loss_g)
+        opt_g.step()
+
+        # Log generator loss
+        self.log('loss_g', loss_g, prog_bar=True)
+
+        # Discriminator step
+        opt_d.zero_grad()
+        outputs, targets = self.forward(batch, optimizer_idx=1)
+        loss_d = self.criterion(outputs, targets)
+        self.manual_backward(loss_d)
+        opt_d.step()
+
+        # Log discriminator loss
+        self.log('loss_d', loss_d, prog_bar=True)
 
         # log scalars
         to_log = getattr(self.criterion, "log", {})
-        to_log.update({"loss": loss})
+        to_log.update({"loss_g": loss_g.item(), "loss_d": loss_d.item()})
 
         if self.logger:
             self.logger.log_metrics(to_log, self.global_step)
 
         # log images
         if (
-            optimizer_idx in [0, None]
+            0 in [0, None]  # since we removed optimizer_idx parameter
             and self.img_log_freq
             and batch_idx % self.img_log_freq == 0
         ):
@@ -228,7 +247,7 @@ class VSAITSolver(pl.LightningModule):
 
             self._log_images(batch_imgs, list(set(tags)))
 
-        return {"loss": loss}
+        return {"loss_g": loss_g, "loss_d": loss_d}
 
     def validation_step(self, batch, batch_idx):
         # parse batch for image tensors
@@ -276,7 +295,7 @@ class VSAITSolver(pl.LightningModule):
             )
         return
 
-    def validation_epoch_end(self, *args, **kwargs):
+    def on_validation_epoch_end(self):
         self.is_first_val_loop = False
 
     def test_step(self, batch, batch_idx):

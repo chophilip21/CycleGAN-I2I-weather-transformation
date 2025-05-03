@@ -34,8 +34,8 @@ def main(args):
     logger.info(f"Loading data config: {args.data_config}")
     cfg["args"] = vars(args)
     cfg.OUTPUT_DIR = full_output_dir
-    cfg.DATA.TRAIN.BATCH_SIZE = args.batch_size
-    cfg.DATA.TRAIN_TARGET.BATCH_SIZE = args.batch_size
+    cfg.DATA.TRAIN.BATCH_SIZE = args.batch_size or 2
+    cfg.DATA.TRAIN_TARGET.BATCH_SIZE = args.batch_size or 2
 
     # parse augmentations
     augmentations = parse_aug(args.aug_config)
@@ -66,14 +66,16 @@ def main(args):
         logger=pl_logger,
         num_sanity_val_steps=0,
         enable_checkpointing=True,
+        enable_progress_bar=True,
+        log_every_n_steps=10,
         callbacks=callbacks,
         default_root_dir=output_dir,
-        weights_save_path=output_dir,
         check_val_every_n_epoch=args.check_val_every_n_epoch if check_val_epoch else 1,
         val_check_interval=args.val_check_interval if not check_val_epoch else None,
         limit_val_batches=args.limit_val_batches,
         max_steps=args.max_steps,
-        gpus=args.num_gpus,
+        accelerator='gpu',
+        devices=args.num_gpus,
     )
     trainer.fit(solver, ckpt_path=args.resume_from_checkpoint)
 

@@ -141,10 +141,10 @@ def process_videos(args, mode: str):
                 metrics = compute_sunny_metrics(img)
                 if mode == 'sunny':
                     below = sum(1 for k, v in metrics.items() if v < avg_metrics[k])
-                    discard = below > 3
+                    discard = below > 6
                 else:
                     above = sum(1 for k, v in metrics.items() if v > avg_metrics[k])
-                    discard = above > 3
+                    discard = above > 6
 
                 if not discard:
                     w, h = img.size
