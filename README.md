@@ -16,6 +16,14 @@ Launch training with defaults in configs:
 ```bash
 # 200000 steps
 python train.py --name="vsait"
+
+# tensorboard
+tensorboard --logdir=runs
+
+
+# inference
+python inference.py --source_image samples/cloudy/overcast-day-portrait-reflector-2.webp --target_image samples/sunny/portraits-in-bright-sun-3.webp --checkpoint ./checkpoints/vsait/version_0/checkpoints/epoch=1-step=192560.ckpt --model_config ./configs/vsait.yaml
+
 ```
 
 This will use the default configs in `./configs/` and save checkpoints and translated images in `./checkpoints/vsait/`.
