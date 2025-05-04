@@ -222,7 +222,7 @@ def main():
     random.seed(args.seed)
     np.random.seed(args.seed)
 
-    process_videos(args, 'sunny')
+    # process_videos(args, 'sunny')
     process_videos(args, 'cloudy')
 
 if __name__ == "__main__":

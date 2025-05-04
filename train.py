@@ -14,6 +14,7 @@ from pytorch_lightning.callbacks.model_checkpoint import ModelCheckpoint
 from solver import VSAITSolver
 from utils.config import get_cfg
 from utils.logger import get_module_logger
+import re
 
 
 def main(args):
@@ -22,7 +23,9 @@ def main(args):
 
     output_dir = args.output_dir
 
-    pl_logger = pl.loggers.TensorBoardLogger(output_dir, args.name)
+    version_match = re.search(r"version_(\d+)", args.resume_from_checkpoint)
+    args.version = int(version_match.group(1)) if version_match else None
+    pl_logger = pl.loggers.TensorBoardLogger(output_dir, args.name, version=args.version)
 
     full_output_dir = get_full_output_dir(pl_logger.log_dir)
 
@@ -34,8 +37,8 @@ def main(args):
     logger.info(f"Loading data config: {args.data_config}")
     cfg["args"] = vars(args)
     cfg.OUTPUT_DIR = full_output_dir
-    cfg.DATA.TRAIN.BATCH_SIZE = args.batch_size or 2
-    cfg.DATA.TRAIN_TARGET.BATCH_SIZE = args.batch_size or 2
+    cfg.DATA.TRAIN.BATCH_SIZE = args.batch_size
+    cfg.DATA.TRAIN_TARGET.BATCH_SIZE = args.batch_size
 
     # parse augmentations
     augmentations = parse_aug(args.aug_config)
@@ -74,6 +77,7 @@ def main(args):
         val_check_interval=args.val_check_interval if not check_val_epoch else None,
         limit_val_batches=args.limit_val_batches,
         max_steps=args.max_steps,
+        max_epochs=10,
         accelerator='gpu',
         devices=args.num_gpus,
     )

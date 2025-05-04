@@ -14,6 +14,7 @@ The dataset has been extracted from self collected videos and the `extractor.py`
 ### Training
 Launch training with defaults in configs:
 ```bash
+# 200000 steps
 python train.py --name="vsait"
 ```
 
