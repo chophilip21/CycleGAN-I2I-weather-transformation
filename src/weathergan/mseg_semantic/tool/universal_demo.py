@@ -16,7 +16,7 @@ import cv2
 import numpy as np
 import mseg.utils.names_utils as names_utils
 
-import mseg_semantic.utils.logger_utils as logger_utils
+import weathergan.mseg_semantic.utils.logger_utils as logger_utils
 from weathergan.mseg_semantic.utils import config
 from weathergan.mseg_semantic.utils.config import CfgNode
 from weathergan.mseg_semantic.tool.inference_task import InferenceTask
