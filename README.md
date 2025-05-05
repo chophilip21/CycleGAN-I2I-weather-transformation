@@ -20,9 +20,8 @@ python train.py --name="vsait"
 # tensorboard
 tensorboard --logdir=runs
 
-
 # inference
-python inference.py --source_image samples/cloudy/overcast-day-portrait-reflector-2.webp --target_image samples/sunny/portraits-in-bright-sun-3.webp --checkpoint ./checkpoints/vsait/version_0/checkpoints/epoch=1-step=192560.ckpt --model_config ./configs/vsait.yaml
+python inference.py --input_image data/source/val/dublin_frame003624.jpg --checkpoint ./checkpoints/vsait/version_0/checkpoints/epoch=1-step=192560.ckpt --model_config ./configs/vsait.yaml
 
 ```
 

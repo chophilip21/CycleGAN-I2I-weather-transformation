@@ -14,7 +14,6 @@ from pytorch_lightning.callbacks.model_checkpoint import ModelCheckpoint
 from solver import VSAITSolver
 from utils.config import get_cfg
 from utils.logger import get_module_logger
-import re
 
 
 def main(args):
@@ -23,9 +22,7 @@ def main(args):
 
     output_dir = args.output_dir
 
-    version_match = re.search(r"version_(\d+)", args.resume_from_checkpoint)
-    args.version = int(version_match.group(1)) if version_match else None
-    pl_logger = pl.loggers.TensorBoardLogger(output_dir, args.name, version=args.version)
+    pl_logger = pl.loggers.TensorBoardLogger(output_dir, args.name)
 
     full_output_dir = get_full_output_dir(pl_logger.log_dir)
 

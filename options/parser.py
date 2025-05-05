@@ -60,7 +60,7 @@ def parse_args_train():
     parser.add_argument(
         "--max_steps",
         type=int,
-        default=400000,
+        default=500000,
         help="Number of total training batches for the training run.",
     )
     parser.add_argument(
