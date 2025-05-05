@@ -181,3 +181,4 @@ src/weathergan/feamgan/data
 *.pth
 *.png
 *.jpg
+src/weathergan/temp_files

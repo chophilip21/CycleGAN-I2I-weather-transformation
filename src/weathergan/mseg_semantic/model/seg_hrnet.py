@@ -336,7 +336,7 @@ class HighResolutionNet(nn.Module):
         self.transition3 = self._make_transition_layer(pre_stage_channels, num_channels)
         self.stage4, pre_stage_channels = self._make_stage(self.stage4_cfg, num_channels, multi_scale_output=True)
 
-        last_inp_channels = np.int(np.sum(pre_stage_channels))
+        last_inp_channels = int(np.sum(pre_stage_channels))
 
         self.last_layer = nn.Sequential(
             nn.Conv2d(
@@ -576,7 +576,7 @@ def get_configured_hrnet(
             (at training, init using imagenet-pretrained model).
     """
 
-    with hydra.initialize_config_module(config_module="mseg_semantic.model"):
+    with hydra.initialize_config_module(config_module="weathergan.mseg_semantic.model"):
         # config is relative to the gtsfm module
         cfg = hydra.compose(config_name="seg_hrnet.yaml")
         logger.info("Using config: ")

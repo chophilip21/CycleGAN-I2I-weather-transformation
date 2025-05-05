@@ -10,11 +10,17 @@ from argparse import Namespace
 import yaml
 from weathergan.mseg_semantic.tool.universal_demo_batched import run_universal_demo_batched
 
+def worker_init_fn(worker_id):
+    """Initialize NumPy in worker processes."""
+    np.random.seed(np.random.get_state()[1][0] + worker_id)
+    import cv2
+    cv2.setNumThreads(1)
+
 def parseArguments():
     parser = argparse.ArgumentParser()
     parser.add_argument("--dataset_path", type=str, help="the dataset to create the mseg segmetnations for",
                         nargs='?', default="/data/cloudy", const="/data/cloudy")
-    parser.add_argument("--model_path", default="model/mseg-3m.pth",type=str, help="the path to the model to use")
+    parser.add_argument("--model_path", default="models/mseg-3m.pth",type=str, help="the path to the model to use")
     parser.add_argument("--config_path", default="src/weathergan/mseg_semantic/config/test/default_config_360_ms.yaml", type=str, help="the path to the config to use")
     parser.add_argument("--rank", type=int, help="the rank of the current proccess (default: 0)",
                     nargs='?', default=0, const=0)
@@ -25,6 +31,8 @@ def parseArguments():
     parser.add_argument("--prefix", type=str, help="the prefix for the split eg. 'daytime/' for the daytime folder in BDD100K (default: "")",
                     nargs='?', default="", const="")
     parser.add_argument("--batch_size", type=int, default=4, help="batch size for processing images")
+    parser.add_argument("--native_img_h", type=int, default=607, help="native image height")
+    parser.add_argument("--native_img_w", type=int, default=1080, help="native image width")
     args = parser.parse_args()
     return args
 
@@ -56,7 +64,12 @@ def createMSegSegmentations(dataset_path, rank, num_gpus, skip_if_exists, prefix
         index_start=test_cfg.get('index_start',0), index_step=test_cfg.get('index_step',0),
         test_gpu=[rank],
         # batched inference specific
-        batch_size=batch_size
+        batch_size=batch_size,
+        # native image dimensions
+        native_img_h=args.native_img_h,
+        native_img_w=args.native_img_w,
+        # worker initialization
+        worker_init_fn=worker_init_fn
     )
     
     splits = [f"{prefix}train", f"{prefix}val", f"{prefix}test"]
