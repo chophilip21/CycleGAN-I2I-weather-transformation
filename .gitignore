@@ -177,4 +177,7 @@ cython_debug/
 /checkpoints
 output.png
 feamgan/data
+src/weathergan/feamgan/data
 *.pth
+*.png
+*.jpg

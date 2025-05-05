@@ -1,0 +1,2 @@
+setup:
+	./helpers/setup.sh

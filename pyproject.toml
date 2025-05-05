@@ -1,0 +1,37 @@
+[build-system]
+requires = ["hatchling", "cmake"]
+build-backend = "hatchling.build"
+
+[project]
+name = "WeatherGan"
+version = "0.0.1" # should be dynamic later on
+description = "Weather Gan application"
+requires-python = ">=3.10"
+authors = [
+    { name = "Philip Cho", email = "chophilip21@gmail.com" },
+]
+
+[project.optional-dependencies]
+devel = [
+    "scikit-video==1.1.11",
+    "termcolor==2.3.0",
+    "scipy==1.7.3",
+    "pandas==1.3.5",
+    "torch-fidelity==0.3.0",
+    "moviepy==1.0.3",
+    "imageio==2.9.0",
+    "wandb==0.15.5",
+    "opencv-python",
+    "pillow",
+    "numpy",
+    "tqdm",
+    "torch>=1.10.0",
+    "torchvision"
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/weathergan"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+]
