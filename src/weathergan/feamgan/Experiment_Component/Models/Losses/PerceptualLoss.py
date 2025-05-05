@@ -3,7 +3,7 @@ import torch
 import torch.nn as nn
 import torchvision
 
-from feamgan.Experiment_Component.Models.utils import modelUtils
+from weathergan.feamgan.Experiment_Component.Models.utils import modelUtils
 
 # Perceptual loss that uses a pretrained VGG network
 class PerceptualLoss(nn.Module):

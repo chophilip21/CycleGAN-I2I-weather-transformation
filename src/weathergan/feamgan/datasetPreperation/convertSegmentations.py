@@ -7,8 +7,8 @@ import numpy as np
 from PIL import Image
 from tqdm import tqdm
 
-from feamgan.LoggerNames import LoggerNames
-from feamgan.Logger_Component.SLoggerHandler import SLoggerHandler
+from weathergan.feamgan.LoggerNames import LoggerNames
+from weathergan.feamgan.Logger_Component.SLoggerHandler import SLoggerHandler
 
 def parseArguments():
     parser = argparse.ArgumentParser()

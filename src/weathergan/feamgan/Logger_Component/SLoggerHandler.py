@@ -1,7 +1,7 @@
 import os
 
-from feamgan.utils.TSingleton import TSingleton
-from feamgan.Logger_Component.Logger.Logger import Logger
+from weathergan.feamgan.utils.TSingleton import TSingleton
+from weathergan.feamgan.Logger_Component.Logger.Logger import Logger
 
 class SLoggerHandler(metaclass=TSingleton):
     """

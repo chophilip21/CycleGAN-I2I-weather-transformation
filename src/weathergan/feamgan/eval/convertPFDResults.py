@@ -6,9 +6,9 @@ import shutil
 
 from tqdm import tqdm
 
-from feamgan.LoggerNames import LoggerNames
-from feamgan.Logger_Component.SLoggerHandler import SLoggerHandler
-from feamgan.datasetPreperation.utils.datasetUtils import extractData
+from weathergan.feamgan.LoggerNames import LoggerNames
+from weathergan.feamgan.Logger_Component.SLoggerHandler import SLoggerHandler
+from weathergan.feamgan.datasetPreperation.utils.datasetUtils import extractData
 
 def parseArguments():
     parser = argparse.ArgumentParser()

@@ -2,6 +2,15 @@
 
 # helpers/setup.sh
 
+# Check Python version
+PYTHON_VERSION=$(python -c "import sys; print('.'.join(map(str, sys.version_info[:2])))")
+if (( $(echo "$PYTHON_VERSION >= 3.11" | bc -l) )); then
+    echo "Error: Python version must be less than 3.11."
+    echo "Current version: $PYTHON_VERSION"
+    echo "Please use Python 3.10 or lower."
+    exit 1
+fi
+
 # 1) Check if the virtual environment exists
 if [ -d "env" ]; then
 

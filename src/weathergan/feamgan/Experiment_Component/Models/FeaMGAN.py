@@ -3,18 +3,18 @@ import wandb
 import os
 import copy
 
-from feamgan.utils.visualizationUtils import formatVideo
-from feamgan.utils.semanticSegmentationUtils import labelMapToOneHot, getNumSemanticLabelIds, labelMapToColor
-from feamgan.Experiment_Component.Models.utils import modelUtils
-from feamgan.Experiment_Component.Models.Sampling.discriminatorMask import discriminatorMask
-from feamgan.Experiment_Component.Models.Sampling.SimilarityCrop import SimilarityCrop, similarityCropSmallPatches
-from feamgan.Experiment_Component.Models.BaseModel import BaseModel
-from feamgan.Experiment_Component.Models.Backbones.Generators.FeaMGenerator import FeaMGenerator
-from feamgan.Experiment_Component.Models.Backbones.Discriminators.MultiscaleDiscriminator import MultiscaleDiscriminator
-from feamgan.Experiment_Component.Models.Losses.GANLoss import GANLoss
-from feamgan.Experiment_Component.Models.Losses.PerceptualLoss import PerceptualLoss
-from feamgan.Experiment_Component.Models.Losses.PerceptualLoss import vgg16
-from feamgan.Experiment_Component.Models.Losses.gradientPenalty import tee_loss, real_penalty
+from weathergan.feamgan.utils.visualizationUtils import formatVideo
+from weathergan.feamgan.utils.semanticSegmentationUtils import labelMapToOneHot, getNumSemanticLabelIds, labelMapToColor
+from weathergan.feamgan.Experiment_Component.Models.utils import modelUtils
+from weathergan.feamgan.Experiment_Component.Models.Sampling.discriminatorMask import discriminatorMask
+from weathergan.feamgan.Experiment_Component.Models.Sampling.SimilarityCrop import SimilarityCrop, similarityCropSmallPatches
+from weathergan.feamgan.Experiment_Component.Models.BaseModel import BaseModel
+from weathergan.feamgan.Experiment_Component.Models.Backbones.Generators.FeaMGenerator import FeaMGenerator
+from weathergan.feamgan.Experiment_Component.Models.Backbones.Discriminators.MultiscaleDiscriminator import MultiscaleDiscriminator
+from weathergan.feamgan.Experiment_Component.Models.Losses.GANLoss import GANLoss
+from weathergan.feamgan.Experiment_Component.Models.Losses.PerceptualLoss import PerceptualLoss
+from weathergan.feamgan.Experiment_Component.Models.Losses.PerceptualLoss import vgg16
+from weathergan.feamgan.Experiment_Component.Models.Losses.gradientPenalty import tee_loss, real_penalty
 
 def disabled_train(self, mode=True):
     return self

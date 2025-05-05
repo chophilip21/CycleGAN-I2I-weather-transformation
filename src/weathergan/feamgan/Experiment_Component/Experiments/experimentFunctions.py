@@ -6,9 +6,9 @@ from nvidia.dali.types import DALIImageType
 
 from nvidia.dali.plugin.pytorch import DALIGenericIterator, LastBatchPolicy
 
-from feamgan.Input_Component.DataPipelines.daliPipelines import dali_sequence_pipeline
-from feamgan.Input_Component.inputUtils import createPipelines
-from feamgan.Experiment_Component.AModelSuit import AModelSuit
+from weathergan.feamgan.Input_Component.DataPipelines.daliPipelines import dali_sequence_pipeline
+from weathergan.feamgan.Input_Component.inputUtils import createPipelines
+from weathergan.feamgan.Experiment_Component.AModelSuit import AModelSuit
 
 def createModel(model_config, dataset_config):
     """

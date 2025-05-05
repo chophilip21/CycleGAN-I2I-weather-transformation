@@ -6,8 +6,8 @@ import hashlib
 from tqdm import tqdm
 from pathlib import Path
 
-from feamgan.LoggerNames import LoggerNames
-from feamgan.Logger_Component.SLoggerHandler import SLoggerHandler
+from weathergan.feamgan.LoggerNames import LoggerNames
+from weathergan.feamgan.Logger_Component.SLoggerHandler import SLoggerHandler
 
 def extractData(extract_path, file_paths):
     Path(extract_path).mkdir(parents=True, exist_ok=True)

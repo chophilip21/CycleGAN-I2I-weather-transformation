@@ -4,8 +4,8 @@ import numpy as np
 
 from torch.nn import functional as F
 
-from feamgan.utils.distUtils import distAllGatherTensor, isMaster
-from feamgan.Experiment_Component.Metrics.KidMetric import KidMetric
+from weathergan.feamgan.utils.distUtils import distAllGatherTensor, isMaster
+from weathergan.feamgan.Experiment_Component.Metrics.KidMetric import KidMetric
 
 class SkvdMetric(KidMetric):
     def __init__(self, is_video, model_dir, dataset_name, dis_model_name="vgg16_f_ll"):

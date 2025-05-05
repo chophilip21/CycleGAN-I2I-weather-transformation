@@ -10,9 +10,9 @@ import skvideo.io
 from pathlib import Path
 from tqdm import tqdm
 
-from feamgan.datasetPreperation.utils.datasetUtils import extractData, checkZipDownload
-from feamgan.LoggerNames import LoggerNames
-from feamgan.Logger_Component.SLoggerHandler import SLoggerHandler
+from weathergan.feamgan.datasetPreperation.utils.datasetUtils import extractData, checkZipDownload
+from weathergan.feamgan.LoggerNames import LoggerNames
+from weathergan.feamgan.Logger_Component.SLoggerHandler import SLoggerHandler
 
 
 def parseArguments():

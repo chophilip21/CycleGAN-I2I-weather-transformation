@@ -1,8 +1,8 @@
 import torch.nn as nn
 import numpy as np
 
-from feamgan.Experiment_Component.Models.BaseNetwork import BaseNetwork
-from feamgan.Experiment_Component.Models.Normalization.utils import getNormLayer
+from weathergan.feamgan.Experiment_Component.Models.BaseNetwork import BaseNetwork
+from weathergan.feamgan.Experiment_Component.Models.Normalization.utils import getNormLayer
 
 # Defines the PatchGAN discriminator with the specified arguments.
 class NLayerDiscriminator(BaseNetwork):

@@ -1,8 +1,8 @@
 import torch.nn as nn
 import torch.nn.functional as F
 
-from feamgan.Experiment_Component.Models.BaseNetwork import BaseNetwork
-from feamgan.Experiment_Component.Models.Blocks.StreamResnetBlock import StreamResnetBlock 
+from weathergan.feamgan.Experiment_Component.Models.BaseNetwork import BaseNetwork
+from weathergan.feamgan.Experiment_Component.Models.Blocks.StreamResnetBlock import StreamResnetBlock 
 
 class Stream(BaseNetwork):
     def __init__(self, ngf, semantic_nc, norm_S, fmiddle_first_layer):

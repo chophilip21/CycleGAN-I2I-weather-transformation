@@ -11,12 +11,12 @@ from apex import amp
 from pathlib import Path
 from abc import ABCMeta
 
-from feamgan.utils import distUtils
-from feamgan.utils.AverageMeter import AverageMeter
-from feamgan.utils.visualizationUtils import formatFramesToUnit, convertTime
-from feamgan.LoggerNames import LoggerNames
-from feamgan.Logger_Component.SLoggerHandler import SLoggerHandler
-from feamgan.Experiment_Component.Models.utils import modelUtils
+from weathergan.feamgan.utils import distUtils
+from weathergan.feamgan.utils.AverageMeter import AverageMeter
+from weathergan.feamgan.utils.visualizationUtils import formatFramesToUnit, convertTime
+from weathergan.feamgan.LoggerNames import LoggerNames
+from weathergan.feamgan.Logger_Component.SLoggerHandler import SLoggerHandler
+from weathergan.feamgan.Experiment_Component.Models.utils import modelUtils
 
 
 class AModelSuit(metaclass=ABCMeta):

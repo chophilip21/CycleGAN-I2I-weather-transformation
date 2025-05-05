@@ -1,8 +1,8 @@
 import torch.nn as nn
 import torch.nn.functional as F
 
-from feamgan.Experiment_Component.Models.Normalization.FADE import FADE
-from feamgan.Experiment_Component.Models.Normalization.FATE import FATE
+from weathergan.feamgan.Experiment_Component.Models.Normalization.FADE import FADE
+from weathergan.feamgan.Experiment_Component.Models.Normalization.FATE import FATE
 
 # ResNet block that uses FADE.
 # It differs from the ResNet block of SPADE in that

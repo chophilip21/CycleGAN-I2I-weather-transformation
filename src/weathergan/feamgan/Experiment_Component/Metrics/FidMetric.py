@@ -1,7 +1,7 @@
 import numpy as np
 from scipy import linalg
 
-from feamgan.Experiment_Component.Metrics.BaseIDMetric import BaseIDMetric
+from weathergan.feamgan.Experiment_Component.Metrics.BaseIDMetric import BaseIDMetric
 
 class FidMetric(BaseIDMetric):
     def __init__(self, is_video, model_dir, dataset_name, dis_model_name="inception_v3"):

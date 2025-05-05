@@ -1,9 +1,9 @@
 import importlib
 import traceback
 
-from feamgan.LoggerNames import LoggerNames
-from feamgan.Logger_Component.SLoggerHandler import SLoggerHandler
-from feamgan.ConfigInput_Component.ConfigProvider import ConfigProvider
+from weathergan.feamgan.LoggerNames import LoggerNames
+from weathergan.feamgan.Logger_Component.SLoggerHandler import SLoggerHandler
+from weathergan.feamgan.ConfigInput_Component.ConfigProvider import ConfigProvider
 
 class ExperimentScheduler:
     """

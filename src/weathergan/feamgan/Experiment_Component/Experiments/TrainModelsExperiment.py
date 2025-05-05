@@ -2,11 +2,11 @@ import traceback
 import wandb
 import torch
 
-from feamgan.LoggerNames import LoggerNames
-from feamgan.Logger_Component.SLoggerHandler import SLoggerHandler
-from feamgan.Experiment_Component.IExperiment import IExperiment
-from feamgan.Experiment_Component.Experiments.experimentFunctions import trainValInferModel
-from feamgan.utils import distUtils
+from weathergan.feamgan.LoggerNames import LoggerNames
+from weathergan.feamgan.Logger_Component.SLoggerHandler import SLoggerHandler
+from weathergan.feamgan.Experiment_Component.IExperiment import IExperiment
+from weathergan.feamgan.Experiment_Component.Experiments.experimentFunctions import trainValInferModel
+from weathergan.feamgan.utils import distUtils
 
 class TrainModelsExperiment(IExperiment):
     """

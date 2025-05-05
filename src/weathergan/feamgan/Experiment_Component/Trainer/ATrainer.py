@@ -3,8 +3,8 @@ import torch
 
 from apex import amp
 
-from feamgan.utils import distUtils
-from feamgan.Experiment_Component.ITrainer import ITrainer
+from weathergan.feamgan.utils import distUtils
+from weathergan.feamgan.Experiment_Component.ITrainer import ITrainer
 
 class ATrainer(ITrainer):
 

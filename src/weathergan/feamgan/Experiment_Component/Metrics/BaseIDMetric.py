@@ -5,9 +5,9 @@ import numpy as np
 from torch.nn import functional as F
 from torchvision.models import inception_v3
 
-from feamgan.utils.distUtils import distAllGatherTensor, isMaster
-from feamgan.Experiment_Component.Models.Losses.PerceptualLoss import vgg16
-from feamgan.Experiment_Component.Models.utils import modelUtils
+from weathergan.feamgan.utils.distUtils import distAllGatherTensor, isMaster
+from weathergan.feamgan.Experiment_Component.Models.Losses.PerceptualLoss import vgg16
+from weathergan.feamgan.Experiment_Component.Models.utils import modelUtils
 
 class BaseIDMetric:
     def __init__(self, is_video, model_dir, dataset_name, dis_model_name):

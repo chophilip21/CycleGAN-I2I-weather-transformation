@@ -4,7 +4,7 @@ import torch.nn as nn
 
 from apex import parallel
 
-from feamgan.utils.visualizationUtils import wandbVisFATEAttention
+from weathergan.feamgan.utils.visualizationUtils import wandbVisFATEAttention
 
 class FATE(nn.Module):
     def __init__(self, config_text, norm_nc, in_nc, name):

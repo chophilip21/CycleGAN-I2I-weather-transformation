@@ -1,9 +1,9 @@
 import torch
 import abc
 
-from feamgan.Experiment_Component.Metrics.FidMetric import FidMetric
-from feamgan.Experiment_Component.Metrics.KidMetric import KidMetric
-from feamgan.Experiment_Component.Metrics.SkvdMetric import SkvdMetric
+from weathergan.feamgan.Experiment_Component.Metrics.FidMetric import FidMetric
+from weathergan.feamgan.Experiment_Component.Metrics.KidMetric import KidMetric
+from weathergan.feamgan.Experiment_Component.Metrics.SkvdMetric import SkvdMetric
 
 class BaseModel(torch.nn.Module):
 

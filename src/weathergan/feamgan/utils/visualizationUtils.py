@@ -2,7 +2,7 @@ import torch
 import datetime
 import wandb
 
-from feamgan.utils.semanticSegmentationUtils import labelMapToColor
+from weathergan.feamgan.utils.semanticSegmentationUtils import labelMapToColor
 
 def formatFramesToUnit(data):
     return torch.add(torch.mul(data, 127.5), 127.5).byte()

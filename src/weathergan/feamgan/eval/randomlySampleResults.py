@@ -5,8 +5,8 @@ import shutil
 from tqdm import tqdm
 import numpy as np
 
-from feamgan.LoggerNames import LoggerNames
-from feamgan.Logger_Component.SLoggerHandler import SLoggerHandler
+from weathergan.feamgan.LoggerNames import LoggerNames
+from weathergan.feamgan.Logger_Component.SLoggerHandler import SLoggerHandler
 
 # INFO: This script is for results not converted with convertPFDResults. 
 # For results convertPFDResults change:

@@ -31,8 +31,8 @@ import torch
 
 from pathlib import Path
 
-from feamgan.Controller_Component.Controller import Controller
-from feamgan.ConfigInput_Component.ConfigProvider import ConfigProvider
+from weathergan.feamgan.Controller_Component.Controller import Controller
+from weathergan.feamgan.ConfigInput_Component.ConfigProvider import ConfigProvider
 
 def parseArguments():
     parser = argparse.ArgumentParser()

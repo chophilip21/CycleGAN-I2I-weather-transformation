@@ -6,15 +6,14 @@ from nvidia.dali.plugin.pytorch import DALIGenericIterator, LastBatchPolicy
 import nvidia.dali.types as types
 from nvidia.dali.types import DALIImageType
 
-from feamgan.Input_Component.DataPipelines.daliPipelines import dali_sequence_pipeline
-from feamgan.Input_Component.inputUtils import createPipelines
-from feamgan.utils import distUtils
-
-from feamgan.LoggerNames import LoggerNames
-from feamgan.Logger_Component.SLoggerHandler import SLoggerHandler
-from feamgan.Experiment_Component.Metrics.SkvdMetric import SkvdMetric
-from feamgan.Experiment_Component.Metrics.CskidMetric import CskidMetric
-from feamgan.Experiment_Component.Metrics.CkvdMetric import CkvdMetric
+from weathergan.feamgan.Input_Component.DataPipelines.daliPipelines import dali_sequence_pipeline
+from weathergan.feamgan.Input_Component.inputUtils import createPipelines
+from weathergan.feamgan.utils import distUtils
+from weathergan.feamgan.LoggerNames import LoggerNames
+from weathergan.feamgan.Logger_Component.SLoggerHandler import SLoggerHandler
+from weathergan.feamgan.Experiment_Component.Metrics.SkvdMetric import SkvdMetric
+from weathergan.feamgan.Experiment_Component.Metrics.CskidMetric import CskidMetric
+from weathergan.feamgan.Experiment_Component.Metrics.CkvdMetric import CkvdMetric
 
 #CSKID: 5000 samples
 def parseArguments():

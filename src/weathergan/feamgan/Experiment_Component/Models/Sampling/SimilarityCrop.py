@@ -7,7 +7,7 @@ from torchvision.transforms.functional import InterpolationMode
 
 from torch.nn import functional as F
 
-from feamgan.Experiment_Component.Models.utils import modelUtils
+from weathergan.feamgan.Experiment_Component.Models.utils import modelUtils
 
 
 @torch.no_grad()
