@@ -17,12 +17,14 @@ WORKDIR /workspace/unique_for_mseg_semantic
 ENV SKLEARN_ALLOW_DEPRECATED_SKLEARN_PACKAGE_INSTALL=True
 RUN SHA=ToUcHMe git clone https://github.com/mseg-dataset/mseg-semantic.git
 RUN pip install -e /workspace/unique_for_mseg_semantic/mseg-semantic
+RUN pip install numpy==1.20.3
+RUN sed -i 's/np.int(/int(/g' /workspace/unique_for_mseg_semantic/mseg-semantic/mseg_semantic/model/seg_hrnet.py
 ENV SKLEARN_ALLOW_DEPRECATED_SKLEARN_PACKAGE_INSTALL=False
 WORKDIR /workspace
 
 RUN pip install termcolor==1.1.0
 RUN apt-get update && apt-get install -y libgtk2.0-dev
 RUN apt-get install -y libgl1-mesa-dev 
-Run pip install tqdm==4.46.0
+RUN pip install tqdm==4.46.0
 
 RUN git config --global --add safe.directory /root/feamgan
