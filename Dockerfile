@@ -1,26 +1,28 @@
-# Use the official PyTorch image as base
-# Use the official PyTorch image as base
-FROM pytorch/pytorch:1.10.0-cuda11.3-cudnn8-devel
+# Use the NVIDIA PyTorch 24.05 image (includes PyTorch, TorchVision & Apex AMP, Dali)
+FROM nvcr.io/nvidia/pytorch:24.05-py3
 
 # Set the working directory inside the container
 WORKDIR /workspace
 
-# Copy the entire project into the container
+# Copy only your project files; data/env/samples should be mounted at runtime
 COPY . /workspace
 
-# Install Python dependencies
-RUN python3 -m pip install --upgrade pip
-RUN python3 -m pip install setuptools wheel
+# Upgrade pip and install basic packaging tools
+RUN python3 -m pip install --upgrade pip \
+ && python3 -m pip install setuptools wheel
 
-# Run the setup script
-RUN make setup
+# Install your project's development dependencies
+RUN python3 -m pip install --upgrade -e .[devel]
 
-# Set environment variables to prevent Python from writing .pyc files
+# Install mseg-api directly from GitHub
+RUN python3 -m pip install git+https://github.com/mseg-dataset/mseg-api.git
+
+# Prevent Python from writing .pyc files and ensure unbuffered logs
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
-# Expose the port for any future services or applications (optional)
+# (Optional) Expose a port for services like Jupyter
 EXPOSE 8888
 
-# The default command to run when the container starts (optional)
+# Default to bash
 CMD ["bash"]
