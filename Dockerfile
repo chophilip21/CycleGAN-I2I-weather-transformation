@@ -7,9 +7,16 @@ WORKDIR /workspace
 # Copy only your project files; data/env/samples should be mounted at runtime
 COPY . /workspace
 
+# Install specific versions of numpy and opencv
+RUN python3 -m pip install numpy==1.21.6 opencv-python==4.5.5.64
+
 # Upgrade pip and install basic packaging tools
 RUN python3 -m pip install --upgrade pip \
  && python3 -m pip install setuptools wheel
+
+# Install additional dependencies
+RUN apt-get update && apt-get install -y libgtk2.0-dev
+RUN apt-get install -y libgl1-mesa-dev 
 
 # Install your project's development dependencies
 RUN python3 -m pip install --upgrade -e .[devel]

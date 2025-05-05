@@ -23,12 +23,12 @@ devel = [
     "wandb==0.15.5",
     "opencv-python>=4.1.0.25",
     "pillow",
-    "numpy>=1.21.6",
     "tqdm",
     "hydra-core",
     "typing_extensions",
     "PyYAML",
     "matplotlib",
+    "numpy==1.21.6",
 ]
 
 [tool.hatch.build.targets.wheel]

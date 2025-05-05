@@ -9,9 +9,9 @@ from typing import List, Optional, Tuple
 
 import cv2
 import numpy as np
-from mseg.utils.names_utils import load_class_names, get_universal_class_names
+from weathergan.mseg.utils.names_utils import load_class_names, get_universal_class_names
 
-import mseg_semantic.utils.logger_utils as logger_utils
+import weathergan.mseg_semantic.utils.logger_utils as logger_utils
 from weathergan.mseg_semantic.utils import config
 from weathergan.mseg_semantic.utils.config import CfgNode
 from weathergan.mseg_semantic.tool.batched_inference_task import BatchedInferenceTask

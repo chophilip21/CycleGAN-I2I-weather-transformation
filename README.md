@@ -9,7 +9,7 @@ docker build -t weather-gan .
 
 # run
 docker run --gpus all -it --rm \
-  -v "$(pwd)/data":/workspace/data \
+  -v "$(pwd)":/workspace \
   --gpus device=0 \
   --shm-size 64G \
   weather-gan:latest

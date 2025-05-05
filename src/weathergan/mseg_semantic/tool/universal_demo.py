@@ -14,7 +14,7 @@ from typing import List, Optional, Tuple
 
 import cv2
 import numpy as np
-import mseg.utils.names_utils as names_utils
+import weathergan.mseg.utils.names_utils as names_utils
 
 import weathergan.mseg_semantic.utils.logger_utils as logger_utils
 from weathergan.mseg_semantic.utils import config

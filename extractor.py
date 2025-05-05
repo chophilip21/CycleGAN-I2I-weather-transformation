@@ -1,3 +1,4 @@
+"""Extracts video frames"""
 import os
 import argparse
 import random
