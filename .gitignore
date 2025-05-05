@@ -176,3 +176,5 @@ cython_debug/
 /secret.py
 /checkpoints
 output.png
+feamgan/data
+*.pth
