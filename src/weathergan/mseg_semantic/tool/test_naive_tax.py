@@ -11,12 +11,12 @@ import argparse
 import logging
 from pathlib import Path
 
-import mseg.utils.names_utils as names_utils
-from mseg.taxonomy.naive_taxonomy_converter import NaiveTaxonomyConverter
-from mseg.utils.dataset_config import infos
+import weathergan.mseg.utils.names_utils as names_utils
+from weathergan.mseg.taxonomy.naive_taxonomy_converter import NaiveTaxonomyConverter
+from weathergan.mseg.utils.dataset_config import infos
 
-import mseg_semantic.tool.mseg_dataloaders as dataloader_utils
-import mseg_semantic.utils.logger_utils as logger_utils
+import weathergan.mseg_semantic.tool.mseg_dataloaders as dataloader_utils
+import weathergan.mseg_semantic.utils.logger_utils as logger_utils
 from weathergan.mseg_semantic.tool.accuracy_calculator import AccuracyCalculator
 from weathergan.mseg_semantic.tool.inference_task import InferenceTask
 from weathergan.mseg_semantic.utils import config

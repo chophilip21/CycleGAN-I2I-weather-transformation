@@ -8,10 +8,10 @@ from typing import Any, List, Mapping
 import imageio
 import numpy as np
 
-import mseg.utils.names_utils as names_utils
-from mseg.utils.mask_utils import save_binary_mask_double, rgb_img_to_obj_cls_img, form_mask_triple_embedded_classnames
-from mseg.utils.cv2_utils import cv2_imread_rgb
-from mseg.utils.multiprocessing_utils import send_list_to_workers
+import weathergan.mseg.utils.names_utils as names_utils
+from weathergan.mseg.utils.mask_utils import save_binary_mask_double, rgb_img_to_obj_cls_img, form_mask_triple_embedded_classnames
+from weathergan.mseg.utils.cv2_utils import cv2_imread_rgb
+from weathergan.mseg.utils.multiprocessing_utils import send_list_to_workers
 
 
 

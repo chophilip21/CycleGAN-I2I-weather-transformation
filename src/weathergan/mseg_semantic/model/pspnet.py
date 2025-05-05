@@ -6,7 +6,7 @@ import torch
 from torch import nn
 import torch.nn.functional as F
 
-import mseg_semantic.model.resnet as models
+import weathergan.mseg_semantic.model.resnet as models
 import pdb
 
 

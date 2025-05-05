@@ -3,7 +3,7 @@
 import torch.utils.data
 from typing import List, Tuple
 
-import mseg_semantic.utils.normalization_utils as normalization_utils
+import weathergan.mseg_semantic.utils.normalization_utils as normalization_utils
 from weathergan.mseg_semantic.utils import dataset, transform, config
 
 

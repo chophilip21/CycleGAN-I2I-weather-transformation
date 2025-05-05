@@ -14,7 +14,7 @@ import PIL.Image as Image
 import PIL.ImageDraw as ImageDraw
 from tqdm import tqdm
 
-import mseg.utils.names_utils as names_utils
+import weathergan.mseg.utils.names_utils as names_utils
 
 
 """

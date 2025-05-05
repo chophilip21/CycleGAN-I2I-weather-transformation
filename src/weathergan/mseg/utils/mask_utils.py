@@ -10,11 +10,11 @@ import torch
 
 from typing import List, Mapping, Optional, Tuple
 
-from mseg.utils.conn_comp import scipy_conn_comp
-from mseg.utils.colormap import colormap
-from mseg.utils.cv2_utils import form_hstacked_imgs, add_text_cv2, form_vstacked_imgs, cv2_write_rgb
-from mseg.utils.resize_util import resize_img_by_short_side
-from mseg.utils.dir_utils import create_leading_fpath_dirs
+from weathergan.mseg.utils.conn_comp import scipy_conn_comp
+from weathergan.mseg.utils.colormap import colormap
+from weathergan.mseg.utils.cv2_utils import form_hstacked_imgs, add_text_cv2, form_vstacked_imgs, cv2_write_rgb
+from weathergan.mseg.utils.resize_util import resize_img_by_short_side
+from weathergan.mseg.utils.dir_utils import create_leading_fpath_dirs
 
 
 NUM_PX_PER_ROW = 50

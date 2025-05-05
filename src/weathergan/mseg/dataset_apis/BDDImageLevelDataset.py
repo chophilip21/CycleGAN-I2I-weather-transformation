@@ -9,9 +9,9 @@ from pathlib import Path
 import pdb
 from typing import List, Optional, Tuple
 
-import mseg.utils.names_utils as names_utils
+import weathergan.mseg.utils.names_utils as names_utils
 
-from mseg.utils.mask_utils import (
+from weathergan.mseg.utils.mask_utils import (
     form_mask_triple_embedded_classnames,
     save_binary_mask_double,
     convert_instance_img_to_mask_img,

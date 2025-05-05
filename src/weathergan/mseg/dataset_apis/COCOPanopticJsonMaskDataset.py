@@ -8,11 +8,11 @@ from pathlib import Path
 import pdb
 from typing import List
 
-import mseg.utils.names_utils as names_utils
-from mseg.utils.mask_utils import save_binary_mask_double
-from mseg.utils.cv2_utils import grayscale_to_color
-from mseg.dataset_apis.COCOSemanticAPI import COCOSemanticAPI
-from mseg.dataset_apis.COCOInstanceAPI import COCOInstanceAPI
+import weathergan.mseg.utils.names_utils as names_utils
+from weathergan.mseg.utils.mask_utils import save_binary_mask_double
+from weathergan.mseg.utils.cv2_utils import grayscale_to_color
+from weathergan.mseg.dataset_apis.COCOSemanticAPI import COCOSemanticAPI
+from weathergan.mseg.dataset_apis.COCOInstanceAPI import COCOInstanceAPI
 
 """
 Note: We do not use this dataset API at training or inference time.

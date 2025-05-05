@@ -8,8 +8,8 @@ from pathlib import Path
 import scipy.io
 from typing import Mapping
 
-from mseg.utils.dir_utils import check_mkdir
-from mseg.utils.names_utils import get_dataloader_id_to_classname_map
+from weathergan.mseg.utils.dir_utils import check_mkdir
+from weathergan.mseg.utils.names_utils import get_dataloader_id_to_classname_map
 
 
 def dump_pascalcontext_mat_files(pcontext_dst_dir: str) -> None:

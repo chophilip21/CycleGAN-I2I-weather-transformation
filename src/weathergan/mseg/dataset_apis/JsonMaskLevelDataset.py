@@ -8,8 +8,8 @@ from typing import Any, List, Optional, Tuple
 import imageio
 import numpy as np
 
-from mseg.utils.json_utils import read_json_file
-from mseg.utils.mask_utils import get_mask_from_polygon, save_binary_mask_double
+from weathergan.mseg.utils.json_utils import read_json_file
+from weathergan.mseg.utils.mask_utils import get_mask_from_polygon, save_binary_mask_double
 
 """
 Note: We do not use this dataset API at training or inference time.

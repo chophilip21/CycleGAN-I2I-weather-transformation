@@ -11,9 +11,9 @@ from pathlib import Path
 
 from typing import List, Optional, Tuple
 
-import mseg.utils.mask_utils as mask_utils
-import mseg.utils.names_utils as names_utils
-from mseg.utils.cv2_utils import grayscale_to_color
+import weathergan.mseg.utils.mask_utils as mask_utils
+import weathergan.mseg.utils.names_utils as names_utils
+from weathergan.mseg.utils.cv2_utils import grayscale_to_color
 
 
 MIN_REQ_PX = 10  # each instance mask must have at least 10 px to be relabeled

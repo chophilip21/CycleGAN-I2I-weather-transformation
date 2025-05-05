@@ -15,20 +15,20 @@ from typing import List, Mapping, Tuple
 
 import cv2
 import imageio
-import mseg.utils.cv2_utils as cv2_utils
-import mseg.utils.dir_utils as dir_utils
-import mseg.utils.names_utils as names_utils
+import weathergan.mseg.utils.cv2_utils as cv2_utils
+import weathergan.mseg.utils.dir_utils as dir_utils
+import weathergan.mseg.utils.names_utils as names_utils
 import numpy as np
 import torch
-from mseg.utils.mask_utils import (
+from weathergan.mseg.utils.mask_utils import (
     save_pred_vs_label_7tuple,
     save_pred_vs_label_4tuple,
     write_six_img_grid_w_embedded_names,
 )
-from mseg.utils.mask_utils_detectron2 import Visualizer
-from mseg.taxonomy.taxonomy_converter import TaxonomyConverter, DEFAULT_TRAIN_DATASETS
+from weathergan.mseg.utils.mask_utils_detectron2 import Visualizer
+from weathergan.mseg.taxonomy.taxonomy_converter import TaxonomyConverter, DEFAULT_TRAIN_DATASETS
 
-import mseg_semantic.utils.logger_utils as logger_utils
+import weathergan.mseg_semantic.utils.logger_utils as logger_utils
 from weathergan.mseg_semantic.tool.relabeled_eval_utils import eval_rel_model_pred_on_unrel_data
 from weathergan.mseg_semantic.utils.avg_meter import AverageMeter, SegmentationAverageMeter
 from weathergan.mseg_semantic.utils.confusion_matrix_renderer import ConfusionMatrixRenderer

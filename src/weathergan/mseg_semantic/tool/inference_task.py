@@ -16,14 +16,14 @@ import torch.backends.cudnn as cudnn
 import torch.nn.functional as F
 import torch.utils.data
 
-import mseg.utils.names_utils as names_utils
-import mseg.utils.resize_util as resize_util
-from mseg.utils.dir_utils import check_mkdir, create_leading_fpath_dirs
-from mseg.utils.mask_utils_detectron2 import Visualizer
-from mseg.taxonomy.taxonomy_converter import TaxonomyConverter
-from mseg.taxonomy.naive_taxonomy_converter import NaiveTaxonomyConverter
+import weathergan.mseg.utils.names_utils as names_utils
+import weathergan.mseg.utils.resize_util as resize_util
+from weathergan.mseg.utils.dir_utils import check_mkdir, create_leading_fpath_dirs
+from weathergan.mseg.utils.mask_utils_detectron2 import Visualizer
+from weathergan.mseg.taxonomy.taxonomy_converter import TaxonomyConverter
+from weathergan.mseg.taxonomy.naive_taxonomy_converter import NaiveTaxonomyConverter
 
-import mseg_semantic.utils.normalization_utils as normalization_utils
+import weathergan.mseg_semantic.utils.normalization_utils as normalization_utils
 from weathergan.mseg_semantic.model.pspnet import PSPNet
 from weathergan.mseg_semantic.utils.avg_meter import AverageMeter
 from weathergan.mseg_semantic.utils.cv2_video_utils import VideoWriter, VideoReader

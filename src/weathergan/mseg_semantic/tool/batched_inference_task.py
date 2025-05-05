@@ -11,9 +11,9 @@ from typing import List, Tuple
 import cv2
 import numpy as np
 import torch
-import mseg.utils.dir_utils as dir_utils
+import weathergan.mseg.utils.dir_utils as dir_utils
 
-import mseg_semantic.utils.logger_utils as logger_utils
+import weathergan.mseg_semantic.utils.logger_utils as logger_utils
 from weathergan.mseg_semantic.tool.inference_task import InferenceTask
 from weathergan.mseg_semantic.tool.mseg_dataloaders import create_test_loader
 from weathergan.mseg_semantic.utils.avg_meter import AverageMeter

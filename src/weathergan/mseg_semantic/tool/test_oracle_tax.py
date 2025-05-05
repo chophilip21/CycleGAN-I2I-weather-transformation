@@ -7,12 +7,12 @@ from pathlib import Path
 from typing import List
 
 import cv2
-import mseg.utils.names_utils as names_utils
+import weathergan.mseg.utils.names_utils as names_utils
 import torch
 import torch.nn.functional as F
-from mseg.utils.dataset_config import infos
+from weathergan.mseg.utils.dataset_config import infos
 
-import mseg_semantic.utils.logger_utils as logger_utils
+import weathergan.mseg_semantic.utils.logger_utils as logger_utils
 from weathergan.mseg_semantic.utils import config
 from weathergan.mseg_semantic.utils.config import CfgNode
 # from weathergan.mseg_semantic.utils.verification_utils import verify_architecture

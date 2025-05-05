@@ -2,7 +2,7 @@
 
 
 
-from mseg.label_preparation.relabeled_data_containers import DatasetClassUpdateRecord
+from weathergan.mseg.label_preparation.relabeled_data_containers import DatasetClassUpdateRecord
 
 
 """ COCO Panoptic"""

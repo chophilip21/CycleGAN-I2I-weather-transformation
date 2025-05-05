@@ -10,21 +10,21 @@ import pdb
 
 from typing import Any, List, Mapping, Tuple
 
-from mseg.utils.multiprocessing_utils import send_list_to_workers
-from mseg.utils.txt_utils import generate_all_img_label_pair_fpaths
-from mseg.utils.names_utils import get_classname_to_dataloaderid_map
-from mseg.utils.mask_utils import swap_px_inside_mask
+from weathergan.mseg.utils.multiprocessing_utils import send_list_to_workers
+from weathergan.mseg.utils.txt_utils import generate_all_img_label_pair_fpaths
+from weathergan.mseg.utils.names_utils import get_classname_to_dataloaderid_map
+from weathergan.mseg.utils.mask_utils import swap_px_inside_mask
 
-from mseg.dataset_apis.Ade20kMaskLevelDataset import Ade20kMaskDataset
-from mseg.dataset_apis.BDDImageLevelDataset import BDDImageLevelDataset
-from mseg.dataset_apis.COCOPanopticJsonMaskDataset import COCOPanopticJsonMaskDataset
-from mseg.dataset_apis.JsonMaskLevelDataset import JsonMaskDataset
-from mseg.dataset_apis.MapillaryMaskDataset import MapillaryMaskDataset
-from mseg.dataset_apis.SunrgbdImageLevelDataset import SunrgbdImageLevelDataset
+from weathergan.mseg.dataset_apis.Ade20kMaskLevelDataset import Ade20kMaskDataset
+from weathergan.mseg.dataset_apis.BDDImageLevelDataset import BDDImageLevelDataset
+from weathergan.mseg.dataset_apis.COCOPanopticJsonMaskDataset import COCOPanopticJsonMaskDataset
+from weathergan.mseg.dataset_apis.JsonMaskLevelDataset import JsonMaskDataset
+from weathergan.mseg.dataset_apis.MapillaryMaskDataset import MapillaryMaskDataset
+from weathergan.mseg.dataset_apis.SunrgbdImageLevelDataset import SunrgbdImageLevelDataset
 
-from mseg.label_preparation.relabeled_data_containers import LabelImageUpdateRecord, DatasetClassUpdateRecord
-from mseg.label_preparation.remap_dataset import remap_dataset
-from mseg.label_preparation.dataset_update_records import (
+from weathergan.mseg.label_preparation.relabeled_data_containers import LabelImageUpdateRecord, DatasetClassUpdateRecord
+from weathergan.mseg.label_preparation.remap_dataset import remap_dataset
+from weathergan.mseg.label_preparation.dataset_update_records import (
     cocop_update_records,
     ade20k_update_records,
     bdd_update_records,
@@ -33,7 +33,7 @@ from mseg.label_preparation.dataset_update_records import (
     sunrgbd_update_records,
     mapillary_update_records,
 )
-from mseg.utils.dataset_config import infos
+from weathergan.mseg.utils.dataset_config import infos
 
 """
 Simple utilities to write a remapped version of the dataset in a universal

@@ -19,8 +19,8 @@ import pdb
 import torch
 from matplotlib.backends.backend_agg import FigureCanvasAgg
 
-from mseg.utils.fb_colormap import random_color, fixed_color
-from mseg.utils.mask_utils import get_mask_from_polygon, get_most_populous_class
+from weathergan.mseg.utils.fb_colormap import random_color, fixed_color
+from weathergan.mseg.utils.mask_utils import get_mask_from_polygon, get_most_populous_class
 
 
 logger = logging.getLogger(__name__)

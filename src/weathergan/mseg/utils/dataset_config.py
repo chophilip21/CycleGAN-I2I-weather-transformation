@@ -5,7 +5,7 @@ from typing import Optional
 
 import numpy as np
 
-from mseg.utils.names_utils import load_class_names
+from weathergan.mseg.utils.names_utils import load_class_names
 
 # -------------------------------------------------------------
 # You must specify the parent directory of `mseg_dataset` below:

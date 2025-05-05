@@ -5,7 +5,7 @@ from typing import List, Tuple
 import numpy as np
 import matplotlib.pyplot as plt
 
-import mseg_semantic.utils.confusion_matrix_utils as confusion_matrix_utils
+import weathergan.mseg_semantic.utils.confusion_matrix_utils as confusion_matrix_utils
 
 
 class ConfusionMatrixRenderer:

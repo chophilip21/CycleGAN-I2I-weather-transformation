@@ -3,8 +3,8 @@
 import glob
 from pathlib import Path
 
-import mseg.utils.dir_utils as dir_utils
-from mseg.utils.txt_utils import get_last_n_path_elements_as_str, write_txt_lines
+import weathergan.mseg.utils.dir_utils as dir_utils
+from weathergan.mseg.utils.txt_utils import get_last_n_path_elements_as_str, write_txt_lines
 
 
 def dump_relpath_txt(jpg_dir: str, txt_output_dir: str) -> str:

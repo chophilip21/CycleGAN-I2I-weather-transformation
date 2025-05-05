@@ -4,8 +4,8 @@ from typing import List, Mapping, Optional, Tuple
 
 import torch.nn as nn
 
-import mseg.utils.names_utils as names_utils
-from mseg.taxonomy.taxonomy_converter import TaxonomyConverter, UNRELABELED_TRAIN_DATASETS, TEST_DATASETS
+import weathergan.mseg.utils.names_utils as names_utils
+from weathergan.mseg.taxonomy.taxonomy_converter import TaxonomyConverter, UNRELABELED_TRAIN_DATASETS, TEST_DATASETS
 
 
 class NaiveTaxonomyConverter(TaxonomyConverter):

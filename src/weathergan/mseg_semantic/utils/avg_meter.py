@@ -5,7 +5,7 @@ import torch
 import torch.distributed as dist
 from typing import List
 
-import mseg_semantic.utils.iou as iou_utils
+import weathergan.mseg_semantic.utils.iou as iou_utils
 
 
 class AverageMeter(object):

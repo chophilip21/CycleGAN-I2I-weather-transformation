@@ -7,13 +7,13 @@ from pathlib import Path
 import pdb
 from typing import Any, List, Mapping, Tuple
 
-from mseg.dataset_apis.COCOSemanticAPI import COCOSemanticAPI
-from mseg.dataset_apis.COCOInstanceAPI import COCOInstanceAPI
-from mseg.utils.mask_utils import swap_px_inside_mask
-from mseg.utils.dataset_config import infos
-from mseg.utils.txt_utils import generate_all_img_label_pair_fpaths
-from mseg.utils.dir_utils import check_mkdir
-from mseg.utils.multiprocessing_utils import send_list_to_workers
+from weathergan.mseg.dataset_apis.COCOSemanticAPI import COCOSemanticAPI
+from weathergan.mseg.dataset_apis.COCOInstanceAPI import COCOInstanceAPI
+from weathergan.mseg.utils.mask_utils import swap_px_inside_mask
+from weathergan.mseg.utils.dataset_config import infos
+from weathergan.mseg.utils.txt_utils import generate_all_img_label_pair_fpaths
+from weathergan.mseg.utils.dir_utils import check_mkdir
+from weathergan.mseg.utils.multiprocessing_utils import send_list_to_workers
 
 
 ROOT = Path(__file__).resolve().parent.parent

@@ -8,18 +8,18 @@ import pdb
 from shutil import copyfile
 from typing import Any, List, Mapping, Optional, Tuple
 
-from mseg.utils.cv2_utils import cv2_imread_rgb
-from mseg.utils.multiprocessing_utils import send_list_to_workers
-from mseg.utils.dictionary_utils import convert_dictionaries
-from mseg.utils.names_utils import (
+from weathergan.mseg.utils.cv2_utils import cv2_imread_rgb
+from weathergan.mseg.utils.multiprocessing_utils import send_list_to_workers
+from weathergan.mseg.utils.dictionary_utils import convert_dictionaries
+from weathergan.mseg.utils.names_utils import (
     get_classname_to_dataloaderid_map,
     get_dataloader_id_to_classname_map,
     load_dataset_colors_arr,
 )
-from mseg.utils.mask_utils import form_label_mapping_array, map_semantic_img_fast, rgb_img_to_obj_cls_img
-from mseg.utils.tsv_utils import read_label_mapping
-from mseg.utils.txt_utils import generate_all_img_label_pair_relative_fpaths
-from mseg.utils.dir_utils import create_leading_fpath_dirs
+from weathergan.mseg.utils.mask_utils import form_label_mapping_array, map_semantic_img_fast, rgb_img_to_obj_cls_img
+from weathergan.mseg.utils.tsv_utils import read_label_mapping
+from weathergan.mseg.utils.txt_utils import generate_all_img_label_pair_relative_fpaths
+from weathergan.mseg.utils.dir_utils import create_leading_fpath_dirs
 
 
 _ROOT = Path(__file__).resolve().parent.parent

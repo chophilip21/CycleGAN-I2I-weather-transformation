@@ -9,8 +9,8 @@ import imageio
 import matplotlib.pyplot as plt
 import numpy as np
 
-import mseg.utils.names_utils as names_utils
-from mseg.utils.mask_utils import (
+import weathergan.mseg.utils.names_utils as names_utils
+from weathergan.mseg.utils.mask_utils import (
     form_mask_triple_embedded_classnames,
     save_binary_mask_double,
     get_present_classes_in_img,

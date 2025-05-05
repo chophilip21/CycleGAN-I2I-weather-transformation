@@ -3,8 +3,8 @@
 import pdb
 from typing import Any, List, Mapping
 
-import mseg.utils.names_utils as names_utils
-from mseg.utils.json_utils import read_json_file
+import weathergan.mseg.utils.names_utils as names_utils
+from weathergan.mseg.utils.json_utils import read_json_file
 
 
 """

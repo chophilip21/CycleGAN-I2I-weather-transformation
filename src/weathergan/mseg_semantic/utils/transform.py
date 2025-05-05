@@ -10,8 +10,8 @@ import numpy as np
 import numbers
 import torch
 
-from mseg.taxonomy.naive_taxonomy_converter import NaiveTaxonomyConverter
-from mseg.taxonomy.taxonomy_converter import TaxonomyConverter
+from weathergan.mseg.taxonomy.naive_taxonomy_converter import NaiveTaxonomyConverter
+from weathergan.mseg.taxonomy.taxonomy_converter import TaxonomyConverter
 
 """
 Provides a set of Pytorch transforms that use OpenCV instead of PIL (Pytorch default)

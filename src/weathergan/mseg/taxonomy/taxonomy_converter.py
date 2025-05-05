@@ -10,7 +10,7 @@ import pandas as pd
 import torch
 import torch.nn as nn
 
-from mseg.utils.names_utils import load_class_names
+from weathergan.mseg.utils.names_utils import load_class_names
 
 """
 We train in a common, unified label space.
@@ -167,7 +167,7 @@ class TaxonomyConverter:
             label_mapping_arr_dict: map dataset names to numpy arrays.
         """
         label_mapping_arr_dict = {}
-        from mseg.utils.mask_utils import form_label_mapping_array_pytorch
+        from weathergan.mseg.utils.mask_utils import form_label_mapping_array_pytorch
 
         for dataset in self.train_datasets:
             label_mapping_arr_dict[dataset] = form_label_mapping_array_pytorch(self.id_to_uid_maps[dataset])
@@ -237,7 +237,7 @@ class TaxonomyConverter:
         Returns:
             label: tensor also of shape (H,W), representing semantic classes in new taxonomy at each pixel
         """
-        from mseg.utils.mask_utils import map_semantic_img_fast_pytorch
+        from weathergan.mseg.utils.mask_utils import map_semantic_img_fast_pytorch
 
         label = map_semantic_img_fast_pytorch(label, self.label_mapping_arr_dict[dataset])
         return label

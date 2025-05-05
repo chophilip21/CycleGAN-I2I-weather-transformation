@@ -4,7 +4,7 @@ import cv2
 import imageio
 import numpy as np
 
-from mseg.utils.cv2_utils import cv2_imread_rgb
+from weathergan.mseg.utils.cv2_utils import cv2_imread_rgb
 
 """
 We use OpenCV, as opposed to `PIL` or `imageio`.

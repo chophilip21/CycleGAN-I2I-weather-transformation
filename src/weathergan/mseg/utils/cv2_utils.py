@@ -7,7 +7,7 @@ from typing import List, Tuple
 import cv2
 import numpy as np
 
-from mseg.utils.dir_utils import create_leading_fpath_dirs
+from weathergan.mseg.utils.dir_utils import create_leading_fpath_dirs
 
 
 def cv2_write_rgb(save_fpath: str, img_rgb: np.ndarray) -> None:

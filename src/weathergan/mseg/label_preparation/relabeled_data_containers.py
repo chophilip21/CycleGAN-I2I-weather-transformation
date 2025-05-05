@@ -4,7 +4,7 @@ import collections
 from pathlib import Path
 from typing import NamedTuple
 
-from mseg.utils.txt_utils import read_txt_file
+from weathergan.mseg.utils.txt_utils import read_txt_file
 
 _ROOT = Path(__file__).resolve().parent.parent
 

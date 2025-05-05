@@ -7,7 +7,7 @@ import numpy as np
 from tqdm import tqdm
 from argparse import Namespace
 import yaml
-from mseg_semantic.tool.universal_demo import run_universal_demo
+from weathergan.mseg_semantic.tool.universal_demo import run_universal_demo
 
 def parseArguments():
     parser = argparse.ArgumentParser()
