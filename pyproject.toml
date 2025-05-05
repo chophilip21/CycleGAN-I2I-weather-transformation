@@ -26,7 +26,14 @@ devel = [
     "numpy",
     "tqdm",
     "torch>=1.10.0",
-    "torchvision"
+    "torchvision",
+    "hydra-core",
+    "numpy==1.20.3",
+    "opencv-python>=4.1.0.25",
+    "typing_extensions",
+    "PyYAML",
+    "matplotlib",
+
 ]
 
 [tool.hatch.build.targets.wheel]

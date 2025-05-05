@@ -50,20 +50,29 @@ if [[ "$OS_TYPE" == "MINGW"* || "$OS_TYPE" == "CYGWIN"* || "$OS_TYPE" == "MSYS_N
 else
     # Linux or macOS activation
     source env/bin/activate
-fi
 
-# 4) Confirm the virtual environment is active
-if [[ -z "$VIRTUAL_ENV" ]]; then
-    echo "Virtual environment activation failed."
-    exit 1
-else
-    echo "Virtual environment activated successfully."
-fi
+    # 4) Install NVIDIA DALI
+    pip install --extra-index-url https://developer.download.nvidia.com/compute/redist --upgrade nvidia-dali-cuda110==1.7.0
 
-# 5) Upgrade pip
-python -m pip install --upgrade pip
+    # 5) Install Apex
+    mkdir -p /tmp/unique_for_apex
+    cd /tmp/unique_for_apex
+    git clone https://github.com/NVIDIA/apex
+    cd apex
+    python setup.py install --cuda_ext --cpp_ext
+    cd -
+    rm -rf /tmp/unique_for_apex
 
-# 7) Continue with the rest of the packages
-python -m build
-python -m pip install --upgrade pip setuptools wheel
-pip install --upgrade -e .[devel]
+    # 6) Install mseg-api
+    mkdir -p /tmp/unique_for_mseg_api
+    SHA=ToUcHMe git clone https://github.com/mseg-dataset/mseg-api.git /tmp/unique_for_mseg_api/mseg-api
+    pip install -e /tmp/unique_for_mseg_api/mseg-api
+    rm -rf /tmp/unique_for_mseg_api
+
+    # 7) Upgrade pip
+    python -m pip install --upgrade pip
+
+    # 8) Continue with the rest of the packages
+    python -m build
+    python -m pip install --upgrade pip setuptools wheel
+    pip install --upgrade -e .[devel]
