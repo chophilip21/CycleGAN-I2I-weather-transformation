@@ -525,11 +525,11 @@ class FeaMGAN(BaseModel):
                 d = pred["content"][1]
                 if self.instance: 
                     d = d[:,:-1]
-                    i = d[:,-1:]
-                    i = i.view(-1, self.seq_lenght, 1, *shape_in[1:])
-                    out.update({ f"real_instance_A": i})      
+                    inst_map = d[:,-1:] * 255
+                    inst_map = inst_map.view(-1, self.seq_lenght, 1, *shape_in[1:])
+                    out.update({ f"real_instance_A": inst_map})      
                 seg_A = torch.argmax(d, keepdim=True, dim=-3).view(-1, self.seq_lenght, 1, *shape_in[1:])
-                seg_A = labelMapToColor(seg_A, self.dataset_config["nameOfDataset"], are_train_ids=False) 
+                seg_A = labelMapToColor(seg_A.cuda(), self.dataset_config["nameOfDataset"]).cpu()
                 out.update({ f"real_segmentations_A": seg_A})      
 
             if "segmentations_mseg" in self.input_types:
@@ -549,12 +549,13 @@ class FeaMGAN(BaseModel):
                         d = pred["content"][i] 
                         if self.instance: 
                             d = d[:,:-1]
-                            i = d[:,-1:] * 255
-                            i = i.view(-1, self.seq_lenght, 1, shape_in[-2], shape_in[-1])[0].byte().cpu()   
-                            summary.update({f"input_content_instance_A":wandb.Video(i, fps=1, format="gif")})
+                            inst_map = d[:,-1:] * 255
+                            inst_map = inst_map.view(-1, self.seq_lenght, 1, shape_in[-2], shape_in[-1])[0].byte().cpu()   
+                            summary.update({f"input_content_instance_A":wandb.Video(inst_map, fps=1, format="gif")})
 
                         d = torch.argmax(d, keepdim=True, dim=-3)    
                         d = d.view(-1, self.seq_lenght, 1, shape_in[-2], shape_in[-1])[0].byte().cpu()      
+                        d = labelMapToColor(d.cuda(), self.dataset_config["nameOfDataset"]).cpu()
                     else:
                         d = pred["content"][i].view(-1, self.seq_lenght, *shape_in)
                         d = formatVideo(d, input_type, vid_index=0, dataset_name=self.dataset_config["nameOfDataset"])
@@ -568,12 +569,13 @@ class FeaMGAN(BaseModel):
                         d = pred["style"][i]
                         if self.instance: 
                             d = d[:,:-1]
-                            i = d[:,-1:] * 255
-                            i = i.view(-1, self.seq_lenght, 1, shape_out[-2], shape_out[-1])[0].byte().cpu()   
-                            summary.update({f"input_style_instance_B":wandb.Video(i, fps=1, format="gif")})
+                            inst_map = d[:,-1:] * 255
+                            inst_map = inst_map.view(-1, self.seq_lenght, 1, shape_out[-2], shape_out[-1])[0].byte().cpu()   
+                            summary.update({f"input_style_instance_B":wandb.Video(inst_map, fps=1, format="gif")})
 
                         d = torch.argmax(d, keepdim=True, dim=-3)  
                         d = d.view(-1, self.seq_lenght, 1, shape_out[-2], shape_out[-1])[0].byte().cpu()
+                        d = labelMapToColor(d.cuda(), self.dataset_config["nameOfDataset"]).cpu()
                     else:
                         d = pred["style"][i].view(-1, self.seq_lenght, *shape_out)      
                         d = formatVideo(d, output_type, vid_index=0, dataset_name=self.dataset_config["nameOfDataset"])

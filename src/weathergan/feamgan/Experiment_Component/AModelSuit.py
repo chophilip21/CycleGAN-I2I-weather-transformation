@@ -1,5 +1,6 @@
 import os
 import time
+from tqdm import tqdm
 import wandb
 import torch
 import glob
@@ -260,11 +261,11 @@ class AModelSuit(metaclass=ABCMeta):
 
         ce = self._state["current_epoch"]
         self._trainer.startOfEpoch(ce, self._model)
-        train_epoch_step = 0
-        data = None
-        gen_pred = None
-        inter_len = self._state["inter_len"]["train"]
-        while inter_len > train_epoch_step: 
+        for train_epoch_step in tqdm(
+            range(self._state["inter_len"]["train"]),
+            desc=f"[Rank {self._local_rank}] Train Epoch {self._state['current_epoch']}",
+            disable=(self._local_rank != 0),
+        ):
             end_train_batch_time = time.time()
 
             end_train_load_batch_time = time.time()
@@ -284,8 +285,9 @@ class AModelSuit(metaclass=ABCMeta):
 
             self._state["current_model_values"]["train"] = {"generator_losses":gen_losses, "discriminator_losses": dis_losses} 
         
-            train_epoch_step+=1
-            cs +=1
+            # increment global step
+            cs = self._state["current_step"] + 1
+            self._state["current_step"] = cs
             self._state["current_step"] = cs
             data = self._trainer.endOfStep(data, ce, cs, self._model)
             eval_time_subtract = 0
@@ -315,7 +317,7 @@ class AModelSuit(metaclass=ABCMeta):
                 end_train_log_time = time.time()
                 self._updateTimes()
                 if self._local_rank == 0:
-                    self._logger.train(f"Step {cs} of {train_steps}. Epoch step {train_epoch_step} of {inter_len}. Name: {self._model_name}", "AModelSuit:_train")
+                    self._logger.train(f"Step {cs} of {train_steps}. Epoch step {train_epoch_step} of {self._state['inter_len']['train']}. Name: {self._model_name}", "AModelSuit:_train")
 
             # Capture the batch time
             self._train_batch_time_meter.update(time.time() - end_train_batch_time-eval_time_subtract) 
@@ -450,13 +452,16 @@ class AModelSuit(metaclass=ABCMeta):
 
         self._trainer.startOfEpoch(None, self._model)
 
-        val_step = 0 
         data = None
         gen_pred = None
         overall_metrics_values = []
         inter_len = self._state["inter_len"][mode]
         fake_B_batch = []
-        while inter_len > val_step: 
+        for val_step in tqdm(
+            range(inter_len),
+            desc=f"[Rank {self._local_rank}] Val {mode.capitalize()}",
+            disable=(self._local_rank != 0),
+        ):
             end_eval_batch_time = time.time()
             end_eval_load_batch_time = time.time()
             data = self._getNextIteratorData(mode)
