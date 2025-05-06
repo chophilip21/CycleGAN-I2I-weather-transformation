@@ -110,7 +110,7 @@ def loadInputPipeline(dataset_config, batch_size, sequence_length, device_id, sh
     return dataset, data_names
 
 
-def trainValInferModel(model_config, model_dir, dataset_config, local_rank, num_gpus, num_threads, seed, use_wandb):
+def trainValInferModel(model_config, model_dir, dataset_config, local_rank, num_gpus, num_threads, seed, use_wandb, resume=False):
     """
     Trains and additionally evaluates the model defined in the model_config with the given dataset on num_gpus gpus
     and saves the model to the path model_dir.
@@ -121,6 +121,7 @@ def trainValInferModel(model_config, model_dir, dataset_config, local_rank, num_
     :param num_gpus: (Integer) The number of gpus to train and val with.
     :param num_threads: (Integer) The number of threads to use.
     :param seed: (Integer) The random seed used in the pipeline.
+    :param resume: (Boolean) Whether to resume training from the latest checkpoint.
     """
     batch_size = model_config["batchSizes"][dataset_config["nameOfDataset"]]
     sequence_length = model_config["sequenceLengths"][dataset_config["nameOfDataset"]]
@@ -148,6 +149,7 @@ def trainValInferModel(model_config, model_dir, dataset_config, local_rank, num_
                             log_epochs=model_config["logEpochs"],
                             save_summary_steps=model_config["saveSummarySteps"],
                             save_summary_epochs=model_config["saveSummaryEpochs"],
+                            load_checkpoint=("latest" if resume else None),
                             verbose=model_config["verbose"],
                             use_wandb=use_wandb,
                             dict_keys=data_names)
@@ -161,4 +163,3 @@ def trainValInferModel(model_config, model_dir, dataset_config, local_rank, num_
     
     if model_config["createVideoFromInference"]:
         model_suit.createVideoFromInference("eval", dataset_config, num_frames=9000)
-

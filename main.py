@@ -22,6 +22,7 @@ def parseArguments():
                         nargs='?', default="./controllerConfig.json", const="./controllerConfig.json")
     parser.add_argument("--local_rank", type=int, help="the rank of the current proccess (on a single machine with 4 gpus 4 processes with rank 0-3 will be started) (default: 0)",
                         nargs='?', default=0)
+    parser.add_argument("--resume", action="store_true", help="Resume training from latest checkpoint")
     args = parser.parse_args()
     return args
 
@@ -42,7 +43,7 @@ def get_cpu_quota_within_docker():
 
     return cpu_cores
 
-def main(controller_config_path, experiment_schedule_path, local_rank):
+def main(controller_config_path, experiment_schedule_path, local_rank, resume):
     """
     Main method which initialises and starts the execution via the controller.
     The type of the execution specified in the controllerConfig.
@@ -52,6 +53,7 @@ def main(controller_config_path, experiment_schedule_path, local_rank):
     :param controller_config_path: (String) The relative path to the controller configuration file.
     :param experiment_schedule_path: (String) The relative path to the experiment schedule file.
     :param local_rank: (Integer) The the local rank of the current proccess for distributed training.
+    :param resume: (Boolean) Whether to resume training from latest checkpoint.
     """
     ###### Print Information ######
     cpu_cores = get_cpu_quota_within_docker() or multiprocessing.cpu_count()
@@ -84,6 +86,7 @@ def main(controller_config_path, experiment_schedule_path, local_rank):
     controller_config["hardware"] = {}
     controller_config["hardware"]["numCPUCores"] = cpu_cores
     controller_config["hardware"]["numGPUs"] = torch.cuda.device_count()
+    controller_config["resume"] = resume
 
     experiment_schedule_path = config_provider.get_config(experiment_schedule_path)
     controller = Controller(controller_config, experiment_schedule_path)
@@ -109,4 +112,4 @@ if __name__ == "__main__":
     controller_config_path = args.controller_config_path
     experiment_schedule_path = args.experiment_schedule_path
     local_rank = args.local_rank
-    main(controller_config_path, experiment_schedule_path, local_rank)
+    main(controller_config_path, experiment_schedule_path, local_rank, args.resume)

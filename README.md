@@ -108,5 +108,5 @@ If training, it should be something like:
 Now to start training, 
 
 ```bash
-python main.py --experiment_schedule_path ./experimentSchedule.json --controller_config_path ./controllerConfig.json
+python main.py --experiment_schedule_path ./experimentSchedule.json --controller_config_path ./controllerConfig.json [--resume]
 ```

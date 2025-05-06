@@ -38,6 +38,7 @@ class TrainModelsExperiment(IExperiment):
         self.__num_threads = controller_config["hardware"]["numCPUCores"]
         self.__wandb_config = controller_config["modelLogging"]["wandb"]
         self.__use_wandb = controller_config["modelLogging"]["usewandb"]
+        self.__resume = controller_config.get("resume", False)
        
     def execute(self):
         """
@@ -89,12 +90,8 @@ class TrainModelsExperiment(IExperiment):
 
                         # Train the model
                         self.__logger.info("Starting to train: " + model_dir, "TrainModelsExperiment:execute")
-                        trainValInferModel(model_config, model_dir, dataset_config, self.__local_rank, world_size, self.__num_threads, self.__seed, self.__use_wandb)
+                        trainValInferModel(model_config, model_dir, dataset_config, self.__local_rank, world_size, self.__num_threads, self.__seed, self.__use_wandb, resume=self.__resume)
                         self.__logger.info("Finished to train: " + model_dir, "TrainModelsExperiment:execute")
                            
             except:
                 print(traceback.format_exc())
-
-
-
-

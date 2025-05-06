@@ -72,10 +72,10 @@
         "saveCheckpointEpochs": 1,
         "logSteps": 400,
         "logEpochs": 1,
-        "saveSummarySteps": 400,
+        "saveSummarySteps": 5,
         "saveSummaryEpochs": 1,
-        "batchSizes": {"bdd": 1},
-        "sequenceLengths": {"bdd": 1},
+        "batchSizes": {"mseg": 1},
+        "sequenceLengths": {"mseg": 1},
         "doTraining":1,
         "doInference":0,
         "createVideoFromInference":0
@@ -84,7 +84,7 @@
   
     "datasetConfigs": [
       {
-          "nameOfDataset": "bdd",
+          "nameOfDataset": "mseg",
           "valDatasetName": "val",
           "steps": [1, 1],
           "strides": [1, 1],

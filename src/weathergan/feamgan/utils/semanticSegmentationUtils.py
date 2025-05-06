@@ -162,6 +162,20 @@ def getNumSemanticLabelIds(dataset_name, are_train_ids):
 
 def labelColorMap(dataset_name, are_train_ids=True):
     labels = getSemanticLabels(dataset_name)
+    
+    if labels is None and "mseg" in dataset_name:
+        # generate a simple 194-class palette so we don't crash
+        N = getNumSemanticLabelIds(dataset_name, are_train_ids)
+        # e.g. three linear ramps with different strides
+        cmap = np.stack([
+            (np.arange(N) * 7) % 256,
+            (np.arange(N) * 13) % 256,
+            (np.arange(N) * 17) % 256,
+        ], axis=1).astype(np.uint8)
+        return cmap
+
+    if labels is None:
+        raise ValueError(f"No semantic-labels defined for dataset '{dataset_name}'")
 
     cmap = []
     for label in labels:
