@@ -282,13 +282,13 @@ class InferenceTask:
         cudnn.benchmark = True
 
         if os.path.isfile(args.model_path):
-            logger.info(f"=> loading checkpoint '{args.model_path}'")
+            # logger.info(f"=> loading checkpoint '{args.model_path}'")
             if self.use_gpu:
                 checkpoint = torch.load(args.model_path)
             else:
                 checkpoint = torch.load(args.model_path, map_location="cpu")
             model.load_state_dict(checkpoint["state_dict"], strict=False)
-            logger.info(f"=> loaded checkpoint '{args.model_path}'")
+            # logger.info(f"=> loaded checkpoint '{args.model_path}'")
         else:
             raise RuntimeError(f"=> no checkpoint found at '{args.model_path}'")
 

@@ -65,8 +65,8 @@ def run_universal_demo_batched(args, use_gpu: bool = True) -> None:
     args.print_freq = 10
 
     args.split = "test"
-    logger.info(args)
-    logger.info("=> creating model ...")
+    # logger.info(args)
+    # logger.info("=> creating model ...")
     args.num_model_classes = len(args.u_classes)
     args.base_size = determine_max_possible_base_size(
         h=args.native_img_h, w=args.native_img_w, crop_sz=min(args.test_h, args.test_w)

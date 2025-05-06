@@ -72,8 +72,8 @@ def createMSegSegmentations(dataset_path, rank, num_gpus, skip_if_exists, prefix
             print(f"Split path {split_path} does not exist. Skipping.")
             continue     
             
-        # Get all sequence paths
-        sequence_paths = sorted(glob.glob(f"{split_path}/frames/*"))
+        # Get all sequence directories
+        sequence_paths = sorted([d for d in glob.glob(f"{split_path}/frames/*") if os.path.isdir(d)])
         sequence_paths = np.array_split(sequence_paths, num_gpus)[rank]
 
         for file_path in tqdm(sequence_paths, desc=f"Processing sequences for rank {rank}"):
@@ -82,16 +82,37 @@ def createMSegSegmentations(dataset_path, rank, num_gpus, skip_if_exists, prefix
             
             # Skip if all segmentations exist
             if skip_if_exists and os.path.isdir(save_dir):
-                input_files = set(Path(f).name for f in glob.glob(f"{file_path}/*"))
-                output_files = set(Path(f).name for f in glob.glob(f"{save_dir}/*"))
+                # Get input files (excluding directories)
+                input_files = set()
+                for in_fp in glob.glob(f"{file_path}/*"):
+                    if os.path.isfile(in_fp):
+                        file_name = Path(in_fp).name
+                        # Remove any file extensions for comparison
+                        base_name = os.path.splitext(file_name)[0]
+                        input_files.add(base_name)
+
+                # Get output files (excluding directories)
+                output_files = set()
+                for seg_path in glob.glob(f"{save_dir}/*"):
+                    if os.path.isfile(seg_path):
+                        file_name = Path(seg_path).name
+                        # Remove any file extensions for comparison
+                        base_name = os.path.splitext(file_name)[0]
+                        output_files.add(base_name)
+
+                # Check if all input files have corresponding segmentations
                 if input_files.issubset(output_files):
+                    print('--'* 20)
                     print(f"Skipping seq {seq_id}. All {len(input_files)} input files have corresponding segmentations.")
+                    print('--'* 20)
                     continue
+                else:
+                    # Log which files are missing
+                    missing_files = input_files - output_files
+                    print(f"Processing seq {seq_id}. Missing segmentations for {len(missing_files)} files: {', '.join(missing_files)}")
             
-            # Create temp directory for batch processing
-            temp_dir = f"{split_path}/{rank}/gray"
-            if os.path.exists(temp_dir):
-                shutil.rmtree(temp_dir)
+            # Create temporary directory for batch processing
+            temp_dir = f"{split_path}/temp_{rank}"
             os.makedirs(temp_dir, exist_ok=True)
             
             # Process with batched demo
@@ -104,10 +125,19 @@ def createMSegSegmentations(dataset_path, rank, num_gpus, skip_if_exists, prefix
             if not os.path.exists(save_dir):
                 os.makedirs(save_dir)
             
-            for file_name in os.listdir(temp_dir):
-                shutil.move(f"{temp_dir}/{file_name}", save_dir)
+            # Copy files from the demo's output directory
+            gray_dir = os.path.join(temp_dir, 'gray')
+            if not os.path.exists(gray_dir):
+                print(f"Warning: No gray directory found at {gray_dir}")
+                continue
             
-            # Clean up temp directory
+            # Copy files from gray directory to final location
+            for file_name in os.listdir(gray_dir):
+                src_path = os.path.join(gray_dir, file_name)
+                dst_path = os.path.join(save_dir, file_name)
+                shutil.copy2(src_path, dst_path)
+            
+            # Clean up temporary directory
             shutil.rmtree(temp_dir)
 
 if __name__ == "__main__":

@@ -69,7 +69,7 @@ class BatchedInferenceTask(InferenceTask):
 
     def execute(self) -> None:
         """ """
-        logger.info(">>>>>>>>>>>>>> Start inference task >>>>>>>>>>>>>")
+        # logger.info(">>>>>>>>>>>>>> Start inference task >>>>>>>>>>>>>")
         self.model.eval()
 
         is_dir = os.path.isdir(self.input_file)
@@ -80,9 +80,9 @@ class BatchedInferenceTask(InferenceTask):
             self.execute_on_dataloader_batched(test_loader)
 
         else:
-            logger.info("Error: Unknown input type")
+            logger.info(f"Error: Unknown input type. expected dir, but {self.input_file} is not a directory")
 
-        logger.info("<<<<<<<<<<< Inference task completed <<<<<<<<<<<<<<")
+        # logger.info("<<<<<<<<<<< Inference task completed <<<<<<<<<<<<<<")
 
     def execute_on_dataloader_batched(self, test_loader: torch.utils.data.dataloader.DataLoader):
         """Optimize throughput through the network by batched inference, instead of single image inference"""
@@ -100,7 +100,7 @@ class BatchedInferenceTask(InferenceTask):
         dir_utils.check_mkdir(self.gray_folder)
 
         for i, (input, _) in enumerate(test_loader):
-            logger.info(f"On batch {i}")
+            # logger.info(f"On batch {i}")
             data_time.update(time.time() - end)
 
             gray_batch = self.execute_on_batch(input)
@@ -119,12 +119,12 @@ class BatchedInferenceTask(InferenceTask):
             batch_time.update(time.time() - end)
             end = time.time()
 
-            if ((i + 1) % self.args.print_freq == 0) or (i + 1 == len(test_loader)):
-                logger.info(
-                    f"Test: [{i+1}/{len(test_loader)}] "
-                    f"Data {data_time.val:.3f} (avg={data_time.avg:.3f})"
-                    f"Batch {batch_time.val:.3f} (avg={batch_time.avg:.3f})"
-                )
+            # if ((i + 1) % self.args.print_freq == 0) or (i + 1 == len(test_loader)):
+            #     logger.info(
+            #         f"Test: [{i+1}/{len(test_loader)}] "
+            #         f"Data {data_time.val:.3f} (avg={data_time.avg:.3f})"
+            #         f"Batch {batch_time.val:.3f} (avg={batch_time.avg:.3f})"
+            #     )
 
     def execute_on_batch(self, batch: torch.Tensor) -> np.ndarray:
         """Only allows for single-scale inference in batch processing mode for now"""
@@ -133,8 +133,8 @@ class BatchedInferenceTask(InferenceTask):
         logits = self.scale_process_cuda_batched(batch, self.args.native_img_h, self.args.native_img_w)
         predictions = torch.argmax(logits, axis=1)
         end = time.time()
-        duration = end - start
-        print(f"Took {duration:.3f} sec. to run batch")
+        # duration = end - start
+        # print(f"Took {duration:.3f} sec. to run batch")
 
         predictions = predictions.data.cpu().numpy()
         gray_batch = np.uint8(predictions)
