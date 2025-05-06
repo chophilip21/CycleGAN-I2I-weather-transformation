@@ -43,6 +43,13 @@ def pad_to_crop_sz_batched(
         pad_w_half
     """
     n, _, orig_h, orig_w = batch.shape
+    # If input is larger than the crop size, center-crop it
+    if orig_h > crop_h or orig_w > crop_w:
+        start_h_crop = (orig_h - crop_h) // 2
+        start_w_crop = (orig_w - crop_w) // 2
+        batch = batch[:, :, start_h_crop:start_h_crop+crop_h, start_w_crop:start_w_crop+crop_w]
+        orig_h, orig_w = batch.shape[2], batch.shape[3]
+
     pad_h = max(crop_h - orig_h, 0)
     pad_w = max(crop_w - orig_w, 0)
     pad_h_half = int(pad_h / 2)

@@ -73,4 +73,16 @@ Segmentation is required on all data just during training phase. Download the ``
 
 ```bash
 python segment_batch.py --dataset_path /data/sunny
+python segment_batch.py --dataset_path /data/cloudy
 ```
+
+# Train
+
+1) Download pretrained weights.
+
+- [large weights](https://drive.usercontent.google.com/download?id=1Nzp2vXBdtvu_BRgujj4PS47NmQsTyHLl&export=download&authuser=1)
+- [small weights](https://drive.google.com/file/d/1TB8hXumlVVw4UamR6mg2ujo0rk56t4GM/view)
+
+2) Set up weight and biases config. 
+
+Edit `src/weathergan/feamgan/controllerConfig.json`
