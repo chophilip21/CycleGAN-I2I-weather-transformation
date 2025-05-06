@@ -2,8 +2,8 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from feamgan.Experiment_Component.Models.BaseNetwork import BaseNetwork
-from feamgan.Experiment_Component.Models.Normalization.utils import getNormLayer
+from weathergan.feamgan.Experiment_Component.Models.BaseNetwork import BaseNetwork
+from weathergan.feamgan.Experiment_Component.Models.Normalization.utils import getNormLayer
 
 # Inspired by the Feature-Pyramid Semantics Embedding Discriminator from https://github.com/xh-liu/CC-FPSE
 class FeaMDiscriminator(BaseNetwork):

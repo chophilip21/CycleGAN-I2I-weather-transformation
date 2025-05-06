@@ -2,11 +2,11 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from feamgan.Experiment_Component.Models.BaseNetwork import BaseNetwork
-from feamgan.Experiment_Component.Models.Blocks.FADEResnetBlock import FADEResnetBlock
-from feamgan.Experiment_Component.Models.Blocks.StreamResnetBlock import StreamResnetBlock
+from weathergan.feamgan.Experiment_Component.Models.BaseNetwork import BaseNetwork
+from weathergan.feamgan.Experiment_Component.Models.Blocks.FADEResnetBlock import FADEResnetBlock
+from weathergan.feamgan.Experiment_Component.Models.Blocks.StreamResnetBlock import StreamResnetBlock
 
-from feamgan.Experiment_Component.Models.Streams.Stream import Stream 
+from weathergan.feamgan.Experiment_Component.Models.Streams.Stream import Stream 
 
 # Inspired by the Generator from https://github.com/EndlessSora/TSIT
 class FeaMGenerator(BaseNetwork):

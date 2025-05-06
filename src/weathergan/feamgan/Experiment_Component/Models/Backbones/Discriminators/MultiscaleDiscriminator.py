@@ -1,9 +1,9 @@
 
 import torch.nn.functional as F
 
-from feamgan.Experiment_Component.Models.BaseNetwork import BaseNetwork
-from feamgan.Experiment_Component.Models.Backbones.Discriminators.NLayerDiscriminator import NLayerDiscriminator
-from feamgan.Experiment_Component.Models.Backbones.Discriminators.FeaMDiscriminator import FeaMDiscriminator
+from weathergan.feamgan.Experiment_Component.Models.BaseNetwork import BaseNetwork
+from weathergan.feamgan.Experiment_Component.Models.Backbones.Discriminators.NLayerDiscriminator import NLayerDiscriminator
+from weathergan.feamgan.Experiment_Component.Models.Backbones.Discriminators.FeaMDiscriminator import FeaMDiscriminator
 
 class MultiscaleDiscriminator(BaseNetwork):
 

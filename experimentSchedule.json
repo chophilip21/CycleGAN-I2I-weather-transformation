@@ -1,7 +1,5 @@
 {
   "mode": "sequential",
-  "experimentsToRun": ["InferenceExperiment"],
-  "experimentConfigsToRun": {"InferenceExperiment": [
-    "pretrainedModels/val/FeaMGAN_PFD_to_CS_Crop352_Full.json"
-    ]}
+  "experimentsToRun": ["TrainModelsExperiment"],
+  "experimentConfigsToRun": {"TrainModelsExperiment": ["src/weathergan/feamgan/Experiment_Component/ExperimentConfigs/train/FeaMGAN/cloudy_to_sunny/FeaMGAN_cloudy_to_sunny_Crop352_Full_r5.json"]}
 }

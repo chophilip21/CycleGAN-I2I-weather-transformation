@@ -1,6 +1,7 @@
 import os
 import json
 from pathlib import Path
+import shutil
 
 def examine_dataset(dataset_path):
     """
@@ -8,6 +9,7 @@ def examine_dataset(dataset_path):
     1. Matching number of files in frames and segmentations_mseg folders for each sequence
     2. Empty folders
     3. Missing sequence folders
+    4. 'gray' folders (which should be removed)
     """
     issues = []
     stats = {
@@ -15,7 +17,8 @@ def examine_dataset(dataset_path):
         'matching_sequences': 0,
         'mismatching_sequences': 0,
         'missing_sequences': 0,
-        'empty_sequences': 0
+        'empty_sequences': 0,
+        'gray_folders_removed': 0
     }
 
     # Convert to Path object for easier handling
@@ -28,6 +31,51 @@ def examine_dataset(dataset_path):
     # Get all sequence folders in the frames directory
     frames_dir = dataset_path / 'frames'
     seg_dir = dataset_path / 'segmentations_mseg'
+
+    # Check for gray folders in both directories and remove them
+    for dir_path in [frames_dir, seg_dir]:
+        if dir_path.exists():
+            # Check for gray folder at the top level
+            gray_folder = dir_path / 'gray'
+            if gray_folder.exists() and gray_folder.is_dir():
+                stats['gray_folders_removed'] += 1
+                issues.append({
+                    'type': 'gray_folder_removed',
+                    'path': str(gray_folder),
+                    'details': 'Gray folder was removed'
+                })
+                try:
+                    shutil.rmtree(gray_folder)
+                    print(f"Removed gray folder at: {gray_folder}")
+                except Exception as e:
+                    print(f"Error removing gray folder: {e}")
+                    issues.append({
+                        'type': 'gray_folder_error',
+                        'path': str(gray_folder),
+                        'details': f'Error removing gray folder: {str(e)}'
+                    })
+
+            # Check for gray folders in each sequence folder
+            for sequence in dir_path.iterdir():
+                if sequence.is_dir():
+                    gray_folder = sequence / 'gray'
+                    if gray_folder.exists() and gray_folder.is_dir():
+                        stats['gray_folders_removed'] += 1
+                        issues.append({
+                            'type': 'gray_folder_removed',
+                            'path': str(gray_folder),
+                            'details': 'Gray folder was removed'
+                        })
+                        try:
+                            shutil.rmtree(gray_folder)
+                            print(f"Removed gray folder at: {gray_folder}")
+                        except Exception as e:
+                            print(f"Error removing gray folder: {e}")
+                            issues.append({
+                                'type': 'gray_folder_error',
+                                'path': str(gray_folder),
+                                'details': f'Error removing gray folder: {str(e)}'
+                            })
 
     if not frames_dir.exists():
         issues.append({
@@ -117,6 +165,7 @@ def examine_dataset(dataset_path):
     print(f"Sequences with mismatching files: {stats['mismatching_sequences']}")
     print(f"Missing sequences: {stats['missing_sequences']}")
     print(f"Empty sequences: {stats['empty_sequences']}")
+    print(f"Gray folders removed: {stats['gray_folders_removed']}")
     print("\nDetailed Issues:")
     print("-" * 50)
 
@@ -134,6 +183,12 @@ def examine_dataset(dataset_path):
                 print("Details:", json.dumps(issue['details'], indent=2))
             elif issue_type == 'empty_sequence':
                 print(f"\nSequence: {issue['path']}")
+                print("Details:", json.dumps(issue['details'], indent=2))
+            elif issue_type == 'gray_folder_removed':
+                print(f"\nPath: {issue['path']}")
+                print("Details:", json.dumps(issue['details'], indent=2))
+            elif issue_type == 'gray_folder_error':
+                print(f"\nPath: {issue['path']}")
                 print("Details:", json.dumps(issue['details'], indent=2))
             else:
                 print(f"\nPath: {issue['path']}")

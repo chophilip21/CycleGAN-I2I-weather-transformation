@@ -368,7 +368,7 @@ class AModelSuit(metaclass=ABCMeta):
         self._model.module.initTraining() 
         self._trainer.train()
         self._model.train()
-        while not self._state["training_done"]: 
+        for epoch in tqdm(range(train_epochs), desc=f"Epochs {self._model_name}", disable=self._local_rank != 0):
             ce = self._state["current_epoch"]
             eval_time_subtract = 0
 

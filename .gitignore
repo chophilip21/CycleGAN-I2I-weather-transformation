@@ -182,3 +182,7 @@ src/weathergan/feamgan/data
 *.png
 *.jpg
 /src/weathergan/temp_files
+controllerConfig.json
+experimentSchedule.json
+/logs
+/wandb

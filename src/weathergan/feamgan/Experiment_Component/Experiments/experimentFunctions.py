@@ -17,7 +17,7 @@ def createModel(model_config, dataset_config):
     :param dataset_config: (Dictionary) The config of the dataset to train and val on.
     :return: model: (torch.nn.Module) The model.
     """
-    input_module = importlib.import_module("feamgan.Experiment_Component.Models." + model_config["modelClassName"])
+    input_module = importlib.import_module("weathergan.feamgan.Experiment_Component.Models." + model_config["modelClassName"])
     model = getattr(input_module, model_config["modelClassName"])(model_config, dataset_config,
             input_shape=dataset_config["augmentations"]["inputDataShapeA"], output_shape=dataset_config["augmentations"]["inputDataShapeB"], sequence_length=model_config["sequenceLengths"][dataset_config["nameOfDataset"]])  
     return model
@@ -28,7 +28,7 @@ def createTrainer(model_config):
     :param model_config: (Dictionary) The configuration of the model containing all hyperparameters.
     :return: trainer: (ITrainer) The trainer.
     """
-    input_module = importlib.import_module("feamgan.Experiment_Component.Trainer." + model_config["trainerName"])
+    input_module = importlib.import_module("weathergan.feamgan.Experiment_Component.Trainer." + model_config["trainerName"])
     trainer = getattr(input_module, model_config["trainerName"])() 
     return trainer
 

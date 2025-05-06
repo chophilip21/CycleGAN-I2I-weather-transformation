@@ -78,11 +78,35 @@ python segment_batch.py --dataset_path /data/cloudy
 
 # Train
 
-1) Download pretrained weights.
+1) Set up weight and biases config. 
 
-- [large weights](https://drive.usercontent.google.com/download?id=1Nzp2vXBdtvu_BRgujj4PS47NmQsTyHLl&export=download&authuser=1)
-- [small weights](https://drive.google.com/file/d/1TB8hXumlVVw4UamR6mg2ujo0rk56t4GM/view)
+Edit `controllerConfig.json` (experiment tracking)
+Edit `experimentSchedule.json` (experiment config file)
 
-2) Set up weight and biases config. 
+If running inference, it should be something like:
 
-Edit `src/weathergan/feamgan/controllerConfig.json`
+```json
+{
+  "mode": "sequential",
+  "experimentsToRun": ["InferenceExperiment"],
+  "experimentConfigsToRun": {"InferenceExperiment": [
+    "src/weathergan/feamgan/Experiment_Component/ExperimentConfigs/pretrainedModels/val/FeaMGAN_Cloudy_to_Sunny_Crop352_Full.json"
+    ]}
+}
+```
+
+If training, it should be something like:
+
+```json
+{
+   "mode": "sequential",
+   "experimentsToRun": ["TrainModelsExperiment"],
+   "experimentConfigsToRun": {"TrainModelsExperiment": ["src/weathergan/feamgan/Experiment_Component/ExperimentConfigs/train/FeaMGAN/cloudy_to_sunny/FeaMGAN_cloudy_to_sunny_Crop352_Full_r5.json"]}
+}
+```
+
+Now to start training, 
+
+```bash
+python main.py --experiment_schedule_path ./experimentSchedule.json --controller_config_path ./controllerConfig.json
+```

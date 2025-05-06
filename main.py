@@ -1,25 +1,5 @@
-#Copyright (c) <2023> <Bonifaz Stuhr>
-
-#Permission is hereby granted, free of charge, to any person obtaining a copy
-#of this software and associated documentation files (the "Software"), to deal
-#in the Software without restriction, including without limitation the rights
-#to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-#copies of the Software, and to permit persons to whom the Software is
-#furnished to do so, subject to the following conditions:
-
-#The above copyright notice and this permission notice shall be included in all
-#copies or substantial portions of the Software.
-
-#THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-#IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-#FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-#AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-#LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-#OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-#SOFTWARE.
-
 """
-Entry File, which contains the main method.
+Training script
 """
 import os
 import sys
@@ -37,9 +17,9 @@ from weathergan.feamgan.ConfigInput_Component.ConfigProvider import ConfigProvid
 def parseArguments():
     parser = argparse.ArgumentParser()
     parser.add_argument("--experiment_schedule_path", type=str, help="the relative path to the configuration of the experiments. This experiments will be executed with the defined schedule. (default: feamgan/experimentSchedule.json)",
-                        nargs='?', default="feamgan/experimentSchedule.json", const="feamgan/experimentSchedule.json")
+                        nargs='?', default="./experimentSchedule.json", const="./experimentSchedule.json")
     parser.add_argument("--controller_config_path", type=str, help="the relative path to the configuration of the controller (includes hardware specification) (default: feamgan/controllerConfig.json)",
-                        nargs='?', default="feamgan/controllerConfig.json", const="feamgan/controllerConfig.json")
+                        nargs='?', default="./controllerConfig.json", const="./controllerConfig.json")
     parser.add_argument("--local_rank", type=int, help="the rank of the current proccess (on a single machine with 4 gpus 4 processes with rank 0-3 will be started) (default: 0)",
                         nargs='?', default=0)
     args = parser.parse_args()
