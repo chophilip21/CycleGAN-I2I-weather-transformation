@@ -10,12 +10,6 @@ from argparse import Namespace
 import yaml
 from weathergan.mseg_semantic.tool.universal_demo_batched import run_universal_demo_batched
 
-def worker_init_fn(worker_id):
-    """Initialize NumPy in worker processes."""
-    np.random.seed(np.random.get_state()[1][0] + worker_id)
-    import cv2
-    cv2.setNumThreads(1)
-
 def parseArguments():
     parser = argparse.ArgumentParser()
     parser.add_argument("--dataset_path", type=str, help="the dataset to create the mseg segmetnations for",
@@ -67,9 +61,7 @@ def createMSegSegmentations(dataset_path, rank, num_gpus, skip_if_exists, prefix
         batch_size=batch_size,
         # native image dimensions
         native_img_h=args.native_img_h,
-        native_img_w=args.native_img_w,
-        # worker initialization
-        worker_init_fn=worker_init_fn
+        native_img_w=args.native_img_w
     )
     
     splits = [f"{prefix}train", f"{prefix}val", f"{prefix}test"]
