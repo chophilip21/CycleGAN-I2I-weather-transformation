@@ -48,9 +48,9 @@ class AModelSuit(metaclass=ABCMeta):
                                             List of epochs supported (e.g. [1,5] saves only a checkpoint in the first and fifth epoch)
         _log_steps:                     (Integer) Every log_steps steps the ModelSuit writes logs. 100 by default. (Optional) set to -1 if not needed.
         _log_epochs:                    (Integer) Every log_epoch epochs the ModelSuit writes logs. 1 by default. (Optional) set to -1 if not needed.
-        _save_summary_steps:            (Integer) Every save_summary_steps steps the ModelSuit saves summaries. 250 by default. 
+        _save_summary_steps:            (Integer) Every save_summary_steps steps the ModelSuit saves Wandb summaries. 250 by default. 
                                         (Optional) set to -1 if not needed.
-        _save_summary_epochs:           (Integer) Every save_summary_epoch epochs the ModelSuit saves summaries. 1 by default. 
+        _save_summary_steps:            (Integer) Every save_summary_epoch epochs the ModelSuit saves Wandb summaries. 1 by default. 
                                         (Optional) set to -1 if not needed.
         _save_checkpoint_steps:         (Integer) Every _save_checkpoint_steps steps the ModelSuit saves checkpoints. 500 by default. 
                                         (Optional) set to -1 if not needed.
@@ -618,7 +618,14 @@ class AModelSuit(metaclass=ABCMeta):
                 self._model.module.loadOptimizerStateDict(self._loaded_checkpoint['optimizer_state_dict'])
                 amp.load_state_dict(self._loaded_checkpoint['amp_state_dict'])
 
-            self._state = self._loaded_checkpoint
+            prev_inter_len = self._state.get("inter_len")
+            # Merge checkpoint into existing training state to preserve metrics and iter lengths
+            for key in ["current_epoch", "current_step", "best_current_step", "best_current_epoch"]:
+                self._state[key] = self._loaded_checkpoint.get(key, self._state.get(key))
+            # Preserve iterator lengths
+            if prev_inter_len is not None:
+                self._state["inter_len"] = prev_inter_len
+            # Hide heavy state dicts
             self._state["model_state_dict"] = "Not shown"
             self._state['optimizer_state_dict'] = "Not shown"
             self._state['amp_state_dict'] = "Not shown"

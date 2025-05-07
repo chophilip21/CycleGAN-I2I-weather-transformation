@@ -71,6 +71,15 @@ feamgan
 
 Segmentation is required on all data just during training phase. Download the ```mseg-3m.pth``` model [here](https://drive.google.com/file/d/1BeZt6QXLwVQJhOVd_NTnVTmtAO1zJYZ-/view), and add it to models.
 
+
+You can create a validation split from train like this.
+
+```
+docker run -it --rm --cpus 255 -v $PWD:/root/feamgan -w /root/feamgan feamgan_docker python -m feamgan.datasetPreperation.createDatasetSubsetSubset --dataset_path "/data/DATASETNAME" --dataset_subset "val" --subset_size 2000
+```
+
+
+
 ```bash
 python segment_batch.py --dataset_path /data/sunny
 python segment_batch.py --dataset_path /data/cloudy

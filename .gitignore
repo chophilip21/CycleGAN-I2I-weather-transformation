@@ -186,3 +186,4 @@ controllerConfig.json
 experimentSchedule.json
 /logs
 /wandb
+experimentResults
