@@ -1,6 +1,6 @@
 # Docker images
 
-There are a lot of components. Best way to deal with dependencies is to use docker.
+There are a lot of components. Best way to deal with dependencies is to use Pytorch docker with `Dali` and `apex` preinstalled.
 
 ```bash
 
@@ -114,8 +114,8 @@ If training, it should be something like:
 }
 ```
 
-Now to start training, 
+Now to start training. Use resume flag in case your training dies in the middle. 
 
 ```bash
-python main.py --experiment_schedule_path ./experimentSchedule.json --controller_config_path ./controllerConfig.json [--resume]
+python main.py --experiment_schedule_path ./experimentSchedule.json --controller_config_path ./controllerConfig.json --resume
 ```

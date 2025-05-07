@@ -571,22 +571,25 @@ class AModelSuit(metaclass=ABCMeta):
 
         latest_checkpoint_name = f"epoch_{ce}_step_{cs}_checkpoint.pt"
         latest_checkpoint_path = os.path.join(self._model_dir, "checkpoints", latest_checkpoint_name)
-        self._state["model_state_dict"] = self._model.state_dict()
-        self._state["optimizer_state_dict"] = self._model.module.getOptimizerStateDict()
-        self._state["amp_state_dict"] = amp.state_dict()
-
+        
+        # build checkpoint dict locally to avoid large in-memory allocations
         cp = {
-            "model_state_dict": self._model.state_dict(),
+            "model_state_dict": self._model.module.state_dict(),
             "optimizer_state_dict": self._model.module.getOptimizerStateDict(),
             "amp_state_dict": amp.state_dict(),
             "current_epoch": ce,
             "current_step": cs,
             "best_current_step": self._state["best_current_step"],
             "best_current_epoch": self._state["best_current_epoch"] 
-
         }
-        torch.save(cp, latest_checkpoint_path)
         
+        # stream save using zipfile serialization to limit memory spikes
+        torch.save(cp, latest_checkpoint_path, _use_new_zipfile_serialization=True)
+        
+        # cleanup temporary checkpoint dict
+        del cp
+        import gc; gc.collect()
+
         fn = os.path.join(self._model_dir, "checkpoints", 'latest_checkpoint.txt')
         with open(fn, 'wt') as f:
             f.write('latest_checkpoint: %s' % latest_checkpoint_name)

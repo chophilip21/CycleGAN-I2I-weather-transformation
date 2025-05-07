@@ -64,11 +64,32 @@ class TrainModelsExperiment(IExperiment):
 
             model_name = model_config["modelName"]
             if (self.__local_rank == 0) and self.__use_wandb:
-                wandb.init(entity=self.__wandb_config["entity"], name=model_config["modelName"], 
-                        allow_val_change=True, project=self.__wandb_config["project"], 
-                        force=self.__wandb_config["forceLogin"], resume=False, 
-                        config=model_config, save_code=True)
-                wandb.watch_called = False 
+                # Determine WandB resume id and mode
+                wandb_id = None
+                if self.__resume:
+                    try:
+                        with open("wandb_last_run_id.txt", "r") as f:
+                            wandb_id = f.read().strip()
+                    except FileNotFoundError:
+                        wandb_id = None
+                resume_mode = 'allow' if self.__resume else False
+                # Init or resume run
+                run = wandb.init(
+                    entity=self.__wandb_config["entity"],
+                    name=model_config["modelName"],
+                    id=wandb_id,
+                    resume=resume_mode,
+                    allow_val_change=True,
+                    project=self.__wandb_config["project"],
+                    force=self.__wandb_config["forceLogin"],
+                    config=model_config,
+                    save_code=True,
+                )
+                wandb.watch_called = False
+                # Persist run id for future resumes
+                if not self.__resume and run and run.id:
+                    with open("wandb_last_run_id.txt", "w") as f:
+                        f.write(run.id)
 
             try:
                 for dataset_config in self.__config["datasetConfigs"]:
