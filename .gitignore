@@ -179,3 +179,5 @@ output.png
 experimentResults
 logs
 outputs
+output
+wandb

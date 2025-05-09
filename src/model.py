@@ -2,6 +2,7 @@ import os
 import requests
 from tqdm import tqdm
 from diffusers import DDPMScheduler
+import torch.nn.functional as F
 
 
 def make_1step_sched():
@@ -38,6 +39,9 @@ def my_vae_decoder_fwd(self, sample, latent_embeds=None):
         # up
         for idx, up_block in enumerate(self.up_blocks):
             skip_in = skip_convs[idx](self.incoming_skip_acts[::-1][idx] * self.gamma)
+            # align spatial dimensions with sample
+            if skip_in.shape[-2:] != sample.shape[-2:]:
+                skip_in = F.interpolate(skip_in, size=sample.shape[-2:], mode="nearest")
             # add skip
             sample = sample + skip_in
             sample = up_block(sample, latent_embeds)

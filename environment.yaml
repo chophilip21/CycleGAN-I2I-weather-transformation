@@ -28,7 +28,10 @@ dependencies:
       - streamlit-keyup==0.2.0
       - lpips
       - clean-fid
-      - peft
+      - peft==0.10.0
       - dominate
       - diffusers==0.25.1
       - gradio==3.43.1
+      - wandb
+      - huggingface_hub==0.25.2
+      - vision-aided-loss

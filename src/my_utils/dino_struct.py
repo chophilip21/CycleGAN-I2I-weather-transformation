@@ -181,5 +181,10 @@ class DinoStructureLoss:
             with torch.no_grad():
                 target_keys_self_sim = self.extractor.get_keys_self_sim_from_input(a.unsqueeze(0), layer_num=11)
             keys_ssim = self.extractor.get_keys_self_sim_from_input(b.unsqueeze(0), layer_num=11)
+            # align SSIM map sizes before loss
+            if keys_ssim.shape[-2:] != target_keys_self_sim.shape[-2:]:
+                tmp = keys_ssim.unsqueeze(1)
+                tmp = F.interpolate(tmp, size=target_keys_self_sim.shape[-2:], mode="nearest")
+                keys_ssim = tmp.squeeze(1)
             loss += F.mse_loss(keys_ssim, target_keys_self_sim)
         return loss
