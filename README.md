@@ -2,10 +2,47 @@
 
 Weather in Vancouver is quite depressing except for Summer. It is either cloudy or rainy for the majority of days in a year. Unfortunately, when I got married, it was a rainy day. I was so sad that I decided to train a CycleGAN to convert rainy to clear weather.
 
+
+<div style="display: flex; gap: 1em; justify-content: center;">
+  <figure style="text-align: center;">
+    <img src="samples/cloudy/wedding1.jpeg" alt="Before" width="500"/>
+    <figcaption>Before</figcaption>
+  </figure>
+  <figure style="text-align: center;">
+    <img src="samples/sunny/wedding1.jpeg" alt="After" width="500"/>
+    <figcaption>After</figcaption>
+  </figure>
+</div>
+
+<div style="display: flex; gap: 1em; justify-content: center;">
+  <figure style="text-align: center;">
+    <img src="samples/cloudy/umbrella.jpg" alt="Before" width="500"/>
+    <figcaption>Before</figcaption>
+  </figure>
+  <figure style="text-align: center;">
+    <img src="samples/sunny/umbrella.jpg" alt="After" width="500"/>
+    <figcaption>After</figcaption>
+  </figure>
+</div>
+
+<div style="display: flex; gap: 1em; justify-content: center;">
+  <figure style="text-align: center;">
+    <img src="samples/cloudy/umbrella2.jpg" alt="Before" width="500"/>
+    <figcaption>Before</figcaption>
+  </figure>
+  <figure style="text-align: center;">
+    <img src="samples/sunny/umbrella2.jpg" alt="After" width="500"/>
+    <figcaption>After</figcaption>
+  </figure>
+</div>
+
+
+The result is not pixel perfect. Perhaps more data and longer training could improve the results.
+
 This repo contains:
-- CycleGAN-Turbo[https://github.com/GaParmar/img2img-turbo] model that learns to shift weather conditions from unpaired images of cloudy and sunny weather.
+- [CycleGAN-Turbo](https://github.com/GaParmar/img2img-turbo) model that learns to shift weather conditions from unpaired images of cloudy and sunny weather.
 - 4x Super-resolution model that upscales the 512x512 output of the CycleGAN
-- Color correction model that corrects the color of the image to professional standards.
+- [Color correction model](https://github.com/davidserra9/namedcurves) that corrects the color of the image to professional standards, trained based on the [PPR10k dataset](https://github.com/davidserra9/PPR10k).
 
 # Getting started
 
@@ -70,8 +107,9 @@ accelerate launch --main_process_port 29501 src/weathergan/turbo/train_cyclegan_
 
 # Inference
 
-```bash
+Sometimes the output looks worse with curve correction. In that case, add `--no_curve_correction` flag. sr_algorithm can be set to `diffusion` or `realesrgan`.
 
+```bash
 # inference by model name
 python inference.py --model_name "rainy_to_clear" --input_image data/cloudy/sequences/val/frames/sequence924/sequence924_frame154224_info.png --output_dir "outputs"
 
