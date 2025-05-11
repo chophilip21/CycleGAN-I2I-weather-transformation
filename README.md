@@ -2,40 +2,11 @@
 
 Weather in Vancouver is quite depressing except for Summer. It is either cloudy or rainy for the majority of days in a year. Unfortunately, when I got married, it was a rainy day. I was so sad that I decided to train a CycleGAN to convert rainy to clear weather.
 
-
-<div style="display: flex; gap: 1em; justify-content: center;">
-  <figure style="text-align: center;">
-    <img src="samples/cloudy/wedding1.jpeg" alt="Before" width="300"/>
-    <figcaption>Before</figcaption>
-  </figure>
-  <figure style="text-align: center;">
-    <img src="samples/sunny/wedding1.jpeg" alt="After" width="300"/>
-    <figcaption>After</figcaption>
-  </figure>
-</div>
-
-<div style="display: flex; gap: 1em; justify-content: center;">
-  <figure style="text-align: center;">
-    <img src="samples/cloudy/umbrella.jpg" alt="Before" width="300"/>
-    <figcaption>Before</figcaption>
-  </figure>
-  <figure style="text-align: center;">
-    <img src="samples/sunny/umbrella.jpg" alt="After" width="300"/>
-    <figcaption>After</figcaption>
-  </figure>
-</div>
-
-<div style="display: flex; gap: 1em; justify-content: center;">
-  <figure style="text-align: center;">
-    <img src="samples/cloudy/umbrella2.jpg" alt="Before" width="300"/>
-    <figcaption>Before</figcaption>
-  </figure>
-  <figure style="text-align: center;">
-    <img src="samples/sunny/umbrella2.jpg" alt="After" width="300"/>
-    <figcaption>After</figcaption>
-  </figure>
-</div>
-
+| Before                                                           | After                                                            |
+| :--------------------------------------------------------------: | :-------------------------------------------------------------: |
+| ![Before1](samples/cloudy/wedding1.jpeg)<br>**Before**          | ![After1](samples/sunny/wedding1.jpeg)<br>**After**            |
+| ![Before2](samples/cloudy/umbrella.jpg)<br>**Before**           | ![After2](samples/sunny/umbrella.jpg)<br>**After**             |
+| ![Before3](samples/cloudy/umbrella2.jpg)<br>**Before**          | ![After3](samples/sunny/umbrella2.jpg)<br>**After**            |
 
 The result is not pixel perfect. Perhaps more data and longer training could improve the results.
 
