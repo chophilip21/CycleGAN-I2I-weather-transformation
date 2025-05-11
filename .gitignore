@@ -181,3 +181,4 @@ logs
 outputs
 output
 wandb
+weights

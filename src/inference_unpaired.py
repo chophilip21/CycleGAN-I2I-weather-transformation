@@ -2,12 +2,14 @@
 
 import os
 import argparse
+from pathlib import Path
 from PIL import Image
 import torch
 from torchvision import transforms
 from cyclegan_turbo import CycleGAN_Turbo
 from my_utils.training_utils import build_transform
 from diffusers import StableDiffusionUpscalePipeline
+from RealESRGAN import RealESRGAN
 
 
 def main():
@@ -15,7 +17,7 @@ def main():
 
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "--input_image", type=str, required=True, help="path to the input image"
+        "--input", type=str, required=True, help="path to the input image or directory containing images"
     )
     parser.add_argument(
         "--prompt",
@@ -41,6 +43,13 @@ def main():
         type=str,
         default="output",
         help="the directory to save the output",
+    )
+    parser.add_argument(
+        "--sr_algorithm",
+        type=str,
+        choices=["diffusion", "realesrgan"],
+        default="realesrgan",
+        help="Super-resolution algorithm to use: 'diffusion' or 'realesrgan'",
     )
     parser.add_argument(
         "--image_prep",
@@ -87,10 +96,52 @@ def main():
 
     T_val = build_transform(args.image_prep)
 
-    input_image = Image.open(args.input_image).convert("RGB")
-    # translate the image
+    # Create output directory if it doesn't exist
+    os.makedirs(args.output_dir, exist_ok=True)
+
+    # Initialize the upscaler pipeline based on chosen algorithm
+    if args.sr_algorithm == "diffusion":
+        os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "max_split_size_mb:128"
+        model_id = "stabilityai/stable-diffusion-x4-upscaler"
+        pipeline = StableDiffusionUpscalePipeline.from_pretrained(
+            model_id, revision="fp16", torch_dtype=torch.float16,
+        )
+        pipeline = pipeline.to("cuda")
+        pipeline.enable_xformers_memory_efficient_attention()
+        pipeline.enable_attention_slicing()
+        pipeline.enable_model_cpu_offload()
+    elif args.sr_algorithm == "realesrgan":
+        device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        pipeline = RealESRGAN(device, scale=4)
+        pipeline.load_weights('weights/RealESRGAN_x4.pth', download=True)
+    else:
+        raise ValueError(f"Invalid SR algorithm: {args.sr_algorithm}")
+
+    # Process single image or directory
+    input_path = Path(args.input)
+    if input_path.is_file():
+        input_image = Image.open(input_path).convert("RGB")
+        process_image(input_image, input_path.name, model, T_val, args, pipeline)
+    elif input_path.is_dir():
+        # Find all image files in the directory
+        image_extensions = {'.jpg', '.jpeg', '.png', '.bmp', '.tiff'}
+        image_files = [f for f in input_path.glob('*') if f.suffix.lower() in image_extensions]
+        
+        for image_file in image_files:
+            print(f"Processing {image_file.name}...")
+            try:
+                input_image = Image.open(image_file).convert("RGB")
+                process_image(input_image, image_file.name, model, T_val, args, pipeline)
+            except Exception as e:
+                print(f"Error processing {image_file.name}: {str(e)}")
+    else:
+        raise ValueError(f"Input path {input_path} is neither a file nor a directory")
+
+
+def process_image(image, filename, model, T_val, args, pipeline):
+    """Process a single image and save the output."""
     with torch.no_grad():
-        input_img = T_val(input_image)
+        input_img = T_val(image)
         x_t = transforms.ToTensor()(input_img)
         x_t = transforms.Normalize([0.5], [0.5])(x_t).unsqueeze(0).cuda()
         if args.use_fp16:
@@ -98,25 +149,25 @@ def main():
         output = model(x_t, direction=args.direction, caption=args.prompt)
 
     output_pil = transforms.ToPILImage()(output[0].cpu() * 0.5 + 0.5)
+    output_path = os.path.join(args.output_dir, filename)
+    output_pil.save(output_path)
     torch.cuda.empty_cache()
 
-    # scale up using x4 upscaler
-    model_id = "stabilityai/stable-diffusion-x4-upscaler"
-    pipeline = StableDiffusionUpscalePipeline.from_pretrained(
-        model_id, revision="fp16", torch_dtype=torch.float16,
-    )
-    pipeline = pipeline.to("cuda")
-    pipeline.enable_attention_slicing()
-    pipeline.enable_model_cpu_offload()
+    # Upscale the image
+    if args.sr_algorithm == "diffusion":
+        upscaled_image = pipeline(prompt=args.prompt, image=output_pil).images[0]
+    elif args.sr_algorithm == "realesrgan":
+        upscaled_image = pipeline.predict(output_pil)
+    else:
+        raise ValueError(f"Invalid SR algorithm: {args.sr_algorithm}")
 
-    upscaled_image = pipeline(prompt=args.prompt, image=output_pil).images[0]
-    print(f"Upscaled image shape: {upscaled_image.shape}")
+    # Rescale back to original size
+    upscaled_image = upscaled_image.resize(image.size, Image.LANCZOS)
+    print("upscale complete.")
 
-    # save the output image
-    bname = os.path.basename(args.input_image)
-    os.makedirs(args.output_dir, exist_ok=True)
-    upscaled_image.save(os.path.join(args.output_dir, bname))
-    print(f"Complete. Saved output to {os.path.join(args.output_dir, bname)}")
+    # Save the output image
+    upscaled_image.save(os.path.join(args.output_dir, filename))
+    print(f"Complete. Saved output to {os.path.join(args.output_dir, filename)}")
 
 
 if __name__ == "__main__":

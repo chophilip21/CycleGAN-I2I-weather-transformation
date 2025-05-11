@@ -13,6 +13,7 @@ Use conda to create an environment and install the dependencies.
 
 ```bash
 conda env create -f environment.yaml
+pip install git+https://github.com/sberbank-ai/Real-ESRGAN.git
 ```
 
 # Training CycleGAN-Turbo
@@ -76,6 +77,6 @@ python src/inference_unpaired.py --model_name "rainy_to_clear" \
     --input_image data/cloudy/sequences/val/frames/sequence924/sequence924_frame154224_info.png --output_dir "outputs"
 
 # inference by model path
-python src/inference_unpaired.py --model_path "output/cyclegan_turbo/cloudy2sunny_subset/checkpoints/model_10501.pkl" --prompt "image taken outdoors on a sunny day" --direction "a2b" --input_image "data/wedding/EOSR0605.jpg" --output_dir "outputs"
+python src/inference_unpaired.py --model_path "output/cyclegan_turbo/checkpoints/model_10501.pkl" --prompt "image taken outdoors on a sunny day" --direction "a2b" --input "samples/cloudy" --output_dir "outputs"
 ```
 
