@@ -10,6 +10,8 @@ from weathergan.turbo.cyclegan_turbo import CycleGAN_Turbo
 from weathergan.turbo.my_utils.training_utils import build_transform
 from diffusers import StableDiffusionUpscalePipeline
 from RealESRGAN import RealESRGAN
+from omegaconf import OmegaConf
+from weathergan.curve.models.model import NamedCurves
 
 
 def main():
@@ -36,8 +38,26 @@ def main():
         "--model_path",
         type=str,
         default=None,
-        help="path to a local model state dict to be used",
+        help="path to a local model state dict to be used (for unpaired gan)",
     )
+    parser.add_argument(
+        "--curve_model_path",
+        type=str,
+        default='checkpoints/ppr10k_a_psnr_26.81.pth',
+        help="path to a local model state dict to be used (for curve correction)",
+    )
+    parser.add_argument(
+        "--curve_config_path",
+        type=str,
+        default='src/weathergan/curve/configs/mit5k_dpe_config.yaml',
+        help="path to a local model state dict to be used (for curve correction)",
+    )
+    parser.add_argument(
+        "--no_curve_correction",
+        action="store_true",
+        help="Disable curve correction step (skip step 2)"
+    )
+
     parser.add_argument(
         "--output_dir",
         type=str,
@@ -117,11 +137,22 @@ def main():
     else:
         raise ValueError(f"Invalid SR algorithm: {args.sr_algorithm}")
 
+    # load curve model
+    if not args.no_curve_correction:
+        config = OmegaConf.load(args.curve_config_path)
+        curve_model = NamedCurves(config.model).cuda()
+        curve_model.load_state_dict(torch.load(args.curve_model_path)["model_state_dict"])
+        curve_model.eval()
+        print(f'Curve model loaded from {args.curve_model_path}')
+    else:
+        curve_model = None
+        print("Skipping curve correction as requested.")
+
     # Process single image or directory
     input_path = Path(args.input)
     if input_path.is_file():
         input_image = Image.open(input_path).convert("RGB")
-        process_image(input_image, input_path.name, model, T_val, args, pipeline)
+        process_image(input_image, input_path.name, model, T_val, args, pipeline, curve_model)
     elif input_path.is_dir():
         # Find all image files in the directory
         image_extensions = {'.jpg', '.jpeg', '.png', '.bmp', '.tiff'}
@@ -131,14 +162,14 @@ def main():
             print(f"Processing {image_file.name}...")
             try:
                 input_image = Image.open(image_file).convert("RGB")
-                process_image(input_image, image_file.name, model, T_val, args, pipeline)
+                process_image(input_image, image_file.name, model, T_val, args, pipeline, curve_model)
             except Exception as e:
                 print(f"Error processing {image_file.name}: {str(e)}")
     else:
         raise ValueError(f"Input path {input_path} is neither a file nor a directory")
 
 
-def process_image(image, filename, model, T_val, args, pipeline):
+def process_image(image, filename, model, T_val, args, pipeline, curve_model=None):
     """Process a single image and save the output."""
     with torch.no_grad():
         input_img = T_val(image)
@@ -152,6 +183,17 @@ def process_image(image, filename, model, T_val, args, pipeline):
     output_path = os.path.join(args.output_dir, filename)
     output_pil.save(output_path)
     torch.cuda.empty_cache()
+
+    # Curve correction step
+    if not args.no_curve_correction and curve_model is not None:
+        # prepare input tensor for curve model
+        curve_input = transforms.ToTensor()(output_pil).unsqueeze(0).cuda()
+        if args.use_fp16:
+            curve_input = curve_input.half()
+        with torch.no_grad():
+            curve_output = curve_model(curve_input)
+        output_pil = transforms.ToPILImage()(curve_output[0].cpu())
+        print("Curve correction complete.")
 
     # Upscale the image
     if args.sr_algorithm == "diffusion":

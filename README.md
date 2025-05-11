@@ -73,9 +73,9 @@ accelerate launch --main_process_port 29501 src/weathergan/turbo/train_cyclegan_
 ```bash
 
 # inference by model name
-python inference_unpaired.py --model_name "rainy_to_clear" --input_image data/cloudy/sequences/val/frames/sequence924/sequence924_frame154224_info.png --output_dir "outputs"
+python inference.py --model_name "rainy_to_clear" --input_image data/cloudy/sequences/val/frames/sequence924/sequence924_frame154224_info.png --output_dir "outputs"
 
 # inference by model path
-python inference_unpaired.py --model_path "output/cyclegan_turbo/checkpoints/model_10501.pkl" --prompt "image taken outdoors on a sunny day" --direction "a2b" --input "samples/cloudy" --output_dir "outputs"
+python inference.py --model_path "output/cyclegan_turbo/checkpoints/model_10501.pkl" --prompt "image taken outdoors on a sunny day" --direction "a2b" --input "samples/cloudy" --output_dir "outputs"
 ```
 
