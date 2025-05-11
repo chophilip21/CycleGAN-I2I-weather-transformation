@@ -1,8 +1,8 @@
 """NamedCurves model with interactive functionality. This version builds upon model.py and bezier_control_point_estimator.py by incorporating additional parameters."""
 
-from models.attention_fusion import LocalFusion
-from models.color_naming import ColorNaming
-from models.backbone import Backbone
+from weathergan.curve.models.attention_fusion import LocalFusion
+from weathergan.curve.models.color_naming import ColorNaming
+from weathergan.curve.models.backbone import Backbone
 from torch import nn
 
 from PIL import Image

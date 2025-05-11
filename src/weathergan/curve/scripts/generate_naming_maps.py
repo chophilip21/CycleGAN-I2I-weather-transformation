@@ -2,7 +2,7 @@ import torch
 import argparse
 import os.path
 from PIL import Image
-from models.color_naming import ColorNaming
+from weathergan.curve.models.color_naming import ColorNaming
 from torchvision.transforms import functional as TF
 
 def parse_args():

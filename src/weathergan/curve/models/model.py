@@ -1,7 +1,7 @@
-from models.attention_fusion import LocalFusion
-from models.bezier_control_point_estimator import BCPE
-from models.color_naming import ColorNaming
-from models.backbone import Backbone
+from weathergan.curve.models.attention_fusion import LocalFusion
+from weathergan.curve.models.bezier_control_point_estimator import BCPE
+from weathergan.curve.models.color_naming import ColorNaming
+from weathergan.curve.models.backbone import Backbone
 from torch import nn
 
 from PIL import Image

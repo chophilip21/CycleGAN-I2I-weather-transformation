@@ -14,6 +14,8 @@ authors = [
 [project.optional-dependencies]
 devel = [
     "realesrgan @ git+https://github.com/sberbank-ai/Real-ESRGAN.git#egg=realesrgan",
+    "scikit-image",
+    "omegaconf",
 ]
 
 [tool.hatch.build.targets.wheel]

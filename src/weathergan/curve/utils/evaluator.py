@@ -3,7 +3,7 @@ import logging
 from torchmetrics import PeakSignalNoiseRatio as PSNR
 from torchmetrics import StructuralSimilarityIndexMeasure as SSIM
 from lpips import LPIPS
-from utils.deltaE import deltaEab, deltaE00
+from weathergan.curve.utils.deltaE import deltaEab, deltaE00
 
 class Evaluator():
     def __init__(self, dataloader, metrics, split_name, log_dirpath, best_metric):
