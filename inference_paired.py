@@ -5,8 +5,8 @@ from PIL import Image
 import torch
 from torchvision import transforms
 import torchvision.transforms.functional as F
-from pix2pix_turbo import Pix2Pix_Turbo
-from image_prep import canny_from_pil
+from weathergan.turbo.pix2pix_turbo import Pix2Pix_Turbo
+from weathergan.turbo.image_prep import canny_from_pil
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

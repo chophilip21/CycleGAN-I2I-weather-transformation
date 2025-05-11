@@ -16,20 +16,20 @@ from diffusers.optimization import get_scheduler
 from peft.utils import get_peft_model_state_dict
 from cleanfid.fid import get_folder_features, build_feature_extractor, frechet_distance
 import vision_aided_loss
-from model import make_1step_sched
-from cyclegan_turbo import (
+from weathergan.turbo.model import make_1step_sched
+from weathergan.turbo.cyclegan_turbo import (
     CycleGAN_Turbo,
     VAE_encode,
     VAE_decode,
     initialize_unet,
     initialize_vae,
 )
-from my_utils.training_utils import (
+from weathergan.turbo.my_utils.training_utils import (
     UnpairedDataset,
     build_transform,
     parse_args_unpaired_training,
-)
-from my_utils.dino_struct import DinoStructureLoss
+)   
+from weathergan.turbo.my_utils.dino_struct import DinoStructureLoss
 
 
 def main(args):

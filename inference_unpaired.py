@@ -6,8 +6,8 @@ from pathlib import Path
 from PIL import Image
 import torch
 from torchvision import transforms
-from cyclegan_turbo import CycleGAN_Turbo
-from my_utils.training_utils import build_transform
+from weathergan.turbo.cyclegan_turbo import CycleGAN_Turbo
+from weathergan.turbo.my_utils.training_utils import build_transform
 from diffusers import StableDiffusionUpscalePipeline
 from RealESRGAN import RealESRGAN
 

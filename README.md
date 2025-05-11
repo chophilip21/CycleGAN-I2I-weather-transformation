@@ -56,7 +56,7 @@ The prompt file is just a single file that contains one line with the prompt (e.
 accelerate config
 
 export NCCL_P2P_DISABLE=1
-accelerate launch --main_process_port 29501 src/train_cyclegan_turbo.py \
+accelerate launch --main_process_port 29501 src/weathergan/turbo/train_cyclegan_turbo.py \
     --pretrained_model_name_or_path="stabilityai/sd-turbo" \
     --output_dir="output/cyclegan_turbo/cloudy2sunny" \
     --dataset_folder "data/cloudy2sunny" \
@@ -73,10 +73,9 @@ accelerate launch --main_process_port 29501 src/train_cyclegan_turbo.py \
 ```bash
 
 # inference by model name
-python src/inference_unpaired.py --model_name "rainy_to_clear" \
-    --input_image data/cloudy/sequences/val/frames/sequence924/sequence924_frame154224_info.png --output_dir "outputs"
+python inference_unpaired.py --model_name "rainy_to_clear" --input_image data/cloudy/sequences/val/frames/sequence924/sequence924_frame154224_info.png --output_dir "outputs"
 
 # inference by model path
-python src/inference_unpaired.py --model_path "output/cyclegan_turbo/checkpoints/model_10501.pkl" --prompt "image taken outdoors on a sunny day" --direction "a2b" --input "samples/cloudy" --output_dir "outputs"
+python inference_unpaired.py --model_path "output/cyclegan_turbo/checkpoints/model_10501.pkl" --prompt "image taken outdoors on a sunny day" --direction "a2b" --input "samples/cloudy" --output_dir "outputs"
 ```
 
