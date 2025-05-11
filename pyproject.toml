@@ -1,0 +1,24 @@
+[build-system]
+requires = ["hatchling", "cmake"]
+build-backend = "hatchling.build"
+
+[project]
+name = "WeatherGan"
+version = "0.0.1" # should be dynamic later on
+description = "Weather Gan application"
+requires-python = ">=3.10"
+authors = [
+    { name = "Philip Cho", email = "chophilip21@gmail.com" },
+]
+
+[project.optional-dependencies]
+devel = [
+    "git+https://github.com/sberbank-ai/Real-ESRGAN.git"
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/weathergan"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+]

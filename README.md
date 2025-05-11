@@ -13,7 +13,7 @@ Use conda to create an environment and install the dependencies.
 
 ```bash
 conda env create -f environment.yaml
-pip install git+https://github.com/sberbank-ai/Real-ESRGAN.git
+pip install --upgrade -e .[devel]
 ```
 
 # Training CycleGAN-Turbo
