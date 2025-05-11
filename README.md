@@ -5,33 +5,33 @@ Weather in Vancouver is quite depressing except for Summer. It is either cloudy 
 
 <div style="display: flex; gap: 1em; justify-content: center;">
   <figure style="text-align: center;">
-    <img src="samples/cloudy/wedding1.jpeg" alt="Before" width="500"/>
+    <img src="samples/cloudy/wedding1.jpeg" alt="Before" width="300"/>
     <figcaption>Before</figcaption>
   </figure>
   <figure style="text-align: center;">
-    <img src="samples/sunny/wedding1.jpeg" alt="After" width="500"/>
+    <img src="samples/sunny/wedding1.jpeg" alt="After" width="300"/>
     <figcaption>After</figcaption>
   </figure>
 </div>
 
 <div style="display: flex; gap: 1em; justify-content: center;">
   <figure style="text-align: center;">
-    <img src="samples/cloudy/umbrella.jpg" alt="Before" width="500"/>
+    <img src="samples/cloudy/umbrella.jpg" alt="Before" width="300"/>
     <figcaption>Before</figcaption>
   </figure>
   <figure style="text-align: center;">
-    <img src="samples/sunny/umbrella.jpg" alt="After" width="500"/>
+    <img src="samples/sunny/umbrella.jpg" alt="After" width="300"/>
     <figcaption>After</figcaption>
   </figure>
 </div>
 
 <div style="display: flex; gap: 1em; justify-content: center;">
   <figure style="text-align: center;">
-    <img src="samples/cloudy/umbrella2.jpg" alt="Before" width="500"/>
+    <img src="samples/cloudy/umbrella2.jpg" alt="Before" width="300"/>
     <figcaption>Before</figcaption>
   </figure>
   <figure style="text-align: center;">
-    <img src="samples/sunny/umbrella2.jpg" alt="After" width="500"/>
+    <img src="samples/sunny/umbrella2.jpg" alt="After" width="300"/>
     <figcaption>After</figcaption>
   </figure>
 </div>
