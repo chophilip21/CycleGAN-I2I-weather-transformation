@@ -1,6 +1,6 @@
 # WeatherGAN
 
-Weather in Vancouver is quite depressing except for Summer. It is either cloudy or rainy for the majority of days in a year. Unfortunately, when I got married, it was a rainy day. I was so sad that I decided to train a CycleGAN to convert rainy to clear weather.
+Weather in Vancouver is quite depressing except for Summer. It is either cloudy or rainy for the majority of days in a year. Unfortunately, when I got married, it was a rainy day. I was quite disappointed and thus I decided to train a CycleGAN to convert rainy to clear weather.
 
 | Before                                                           | After                                                            |
 | :--------------------------------------------------------------: | :-------------------------------------------------------------: |
@@ -8,12 +8,23 @@ Weather in Vancouver is quite depressing except for Summer. It is either cloudy 
 | ![Before2](samples/cloudy/umbrella.jpg)<br>**Before**           | ![After2](samples/sunny/umbrella.jpg)<br>**After**             |
 | ![Before3](samples/cloudy/umbrella2.jpg)<br>**Before**          | ![After3](samples/sunny/umbrella2.jpg)<br>**After**            |
 
-The result is not pixel perfect. Perhaps more data and longer training could improve the results.
-
 This repo contains:
 - [CycleGAN-Turbo](https://github.com/GaParmar/img2img-turbo) model that learns to shift weather conditions from unpaired images of cloudy and sunny weather.
 - 4x Super-resolution model that upscales the 512x512 output of the CycleGAN
 - [Color correction model](https://github.com/davidserra9/namedcurves) that corrects the color of the image to professional standards, trained based on the [PPR10k dataset](https://github.com/davidserra9/PPR10k).
+
+
+## ✅ Done
+- [x] Create custom unpaired dataset for sunny and cloudy weather.
+- [x] Train CycleGAN-turbo model
+- [x] Add SR model and color correction model to the inference pipeline 
+
+## 🎯 To-do
+The result is not pixel perfect. Loss on detail on smaller regions, like small faces, becomes quite obvious when you zoom in. 
+Unpaired GAN has advantage in terms of ease of creating dataset, but loss of minor details and some degree of noise is hard to avoid. Paired GANs like Pix2Pix-turbo, on the other hand, would have exact opposite advantage. 
+
+- [ ] Perhaps you can create synthetic dataset by segmenting humans and objects, and swapping the background from cloudy to sunny. Lights could be simulated with re-lighting models to create realistic images.
+- [ ] Training paired-GAN could be further improved with patch-based training. This way, we don't have to worry about SR and loss of details from up-sampling.   
 
 # Getting started
 
